@@ -130,7 +130,7 @@
             <input type="text" id="room-code-input" maxlength="6" class="w-full bg-sky-50 border border-sky-200 rounded-xl px-4 py-3 text-sky-900 text-center font-mono font-bold text-xl outline-none focus:border-soop uppercase transition-colors" placeholder="XXXXXX">
             <div class="flex gap-2 mt-2">
                 <button onclick="closeJoinRoomModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-xl transition-colors">취소</button>
-                <button onclick="submitJoinRoom()" class="flex-1 bg-soop hover:bg-sky-500 text-white font-bold py-3 rounded-xl transition-colors shadow-sm">입장</button>
+                <button onclick="submitJoinRoom()" class="flex-1 bg-soop hover:bg-sky-500 text-white font-bold py-3 rounded-xl transition-colors shadow-sm">확인</button>
             </div>
         </div>
     </div>
@@ -270,7 +270,7 @@
         <div id="screen-modeselect-multi" class="screen pb-32 pt-6">
             <h2 class="text-2xl font-bold text-center mb-8 text-sky-950 shrink-0 transition-colors">멀티플레이 모드 선택</h2>
             <div class="w-full max-w-md mx-auto flex flex-col gap-4">
-                <button onclick="initRankRoom()" class="bg-white border-2 border-amber-400 p-5 rounded-2xl shadow-sm hover:bg-amber-50 transition-colors text-left flex flex-col gap-1.5 active:scale-[0.98]">
+                <button onclick="joinRankMatch()" class="bg-white border-2 border-amber-400 p-5 rounded-2xl shadow-sm hover:bg-amber-50 transition-colors text-left flex flex-col gap-1.5 active:scale-[0.98]">
                     <div class="font-black text-2xl text-amber-500 flex items-center gap-2"><span>⚔️</span> 랭크 매치 입장하기</div>
                     <div class="text-sm font-medium text-amber-700">비슷한 점수대의 플레이어 8명과 경쟁하여 랭크 포인트를 획득하세요! (고수 난이도 적용)</div>
                 </button>
@@ -487,15 +487,15 @@
             </div>
 
             <div class="fixed bottom-0 left-0 w-full bg-white border-t border-sky-200 p-4 flex justify-center z-10 shadow-[0_-4px_10px_rgba(0,173,239,0.05)] transition-colors">
-                <button id="btn-member-start" onclick="startGame()" class="w-full max-w-5xl py-4 rounded-xl font-bold text-xl transition-all flex items-center justify-center gap-2 bg-sky-200 text-sky-500 cursor-not-allowed">
-                    🎮 준비 완료
+                <button id="btn-member-start" onclick="handleMemberSelectComplete()" class="w-full max-w-5xl py-4 rounded-xl font-bold text-xl transition-all flex items-center justify-center gap-2 bg-sky-200 text-sky-500 cursor-not-allowed">
+                    🎮 완료
                 </button>
             </div>
         </div>
 
-        <!-- 4. 인게임 화면 (리더보드 좌측 배치 변경) -->
+        <!-- 4. 인게임 화면 -->
         <div id="screen-game" class="screen w-full pb-8 relative">
-            <div class="w-full max-w-5xl mx-auto flex justify-between items-end mb-4 mt-2">
+            <div class="w-full max-w-6xl mx-auto flex justify-between items-end mb-4 mt-2 px-2">
                 <div>
                     <h1 class="soop-text text-3xl mb-1">SOOP 2048</h1>
                     <p id="game-mode-subtitle" class="text-sky-600 font-medium text-xs transition-colors">나만의 스트리머 라인업 합치기!</p>
@@ -513,7 +513,7 @@
                 </div>
             </div>
 
-            <div id="survival-timer-wrapper" class="hidden w-full max-w-5xl mx-auto shrink-0 mb-4">
+            <div id="survival-timer-wrapper" class="hidden w-full max-w-md sm:max-w-[450px] mx-auto shrink-0 mb-4 px-2">
                 <div class="flex justify-between items-end mb-1 px-2">
                     <span id="survival-time-desc" class="text-[11px] sm:text-xs font-black text-rose-500">남은 시간</span>
                     <span id="survival-time-text" class="text-2xl font-black text-rose-600 font-mono tracking-tighter">15.0s</span>
@@ -523,7 +523,7 @@
                 </div>
             </div>
 
-            <div class="w-full max-w-5xl flex justify-between gap-2 mb-4 mx-auto shrink-0">
+            <div class="w-full max-w-6xl flex justify-between gap-2 mb-4 mx-auto shrink-0 px-2">
                 <button onclick="confirmExitGame()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold py-2 px-4 rounded-full shadow-sm transition-colors flex items-center gap-1">
                     <span>🚪</span> 나가기
                 </button>
@@ -537,11 +537,11 @@
                 </div>
             </div>
 
-            <!-- 레이아웃 개편: 좌측 리더보드 -->
-            <div id="game-main-layout" class="flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-5xl mx-auto gap-6 relative">
+            <!-- 레이아웃 개편: 멀티플레이 리더보드를 좌측으로 -->
+            <div id="game-main-layout" class="flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-6xl mx-auto gap-6 relative px-2">
                 
                 <!-- 멀티플레이용 랭킹 UI (좌측 배치) -->
-                <div id="multiplayer-leaderboard-container" class="hidden w-full max-w-md lg:w-64 bg-indigo-900 rounded-2xl p-4 shadow-xl border border-indigo-700 shrink-0 transition-colors">
+                <div id="multiplayer-leaderboard-container" class="hidden w-full max-w-md lg:w-56 xl:w-64 bg-indigo-900 rounded-2xl p-4 shadow-xl border border-indigo-700 shrink-0 transition-colors">
                     <h3 class="text-white font-bold mb-3 text-center text-sm border-b border-indigo-700 pb-2">🏆 실시간 순위</h3>
                     <div id="multiplayer-leaderboard" class="flex flex-col gap-1.5">
                         <!-- 랭킹 아이템들이 JS로 렌더링 됨 -->
@@ -632,16 +632,10 @@
 
     <!-- 스크립트 모음 -->
     <script>
-        // 전역 함수/상태 등록
+        // === 1. 사운드 및 다크모드 시스템 ===
         window.audioCtx = null;
         window.globalVolume = parseFloat(localStorage.getItem('soop2048Volume') || '1.0');
         window.isDarkMode = localStorage.getItem('soop2048DarkMode') === 'true';
-        window.roomRef = null;
-        window.myPlayerRef = null;
-        window.rankMatchRef = null;
-        window.myRankPlayerRef = null;
-        window.rankCdInterval = null;
-        window.multiSyncInterval = null;
 
         window.initAudio = function() {
             if (!window.audioCtx) window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -679,6 +673,58 @@
             }
         };
 
+        // === 2. 전역 상태 및 유틸리티 ===
+        window.getFirstChosung = function(str) {
+            if (!str) return "";
+            const cho = ["ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+            const code = str.charCodeAt(0) - 44032;
+            if (code > -1 && code < 11172) return cho[Math.floor(code / 588)];
+            return str.charAt(0).toUpperCase();
+        };
+
+        window.CHOSUNG_LIST = ['전체', 'ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ', 'A-Z'];
+
+        window.FALLBACK_DATA = {
+            streamers: [
+                { "id": "s1", "name": "아이네", "imgs": ["images/streamers/aine.png"] },
+                { "id": "s2", "name": "징버거", "imgs": ["images/streamers/jingbeogeo.png"] },
+                { "id": "s3", "name": "릴파", "imgs": ["images/streamers/rilpa.png"] },
+                { "id": "s4", "name": "주르르", "imgs": ["images/streamers/jureureu.png"] },
+                { "id": "s5", "name": "고세구", "imgs": ["images/streamers/gosegu.png"] },
+                { "id": "s6", "name": "비챤", "imgs": ["images/streamers/bichyan.png"] },
+                { "id": "s7", "name": "우왁굳", "imgs": ["images/streamers/uwaggud.webp"] },
+                { "id": "s14", "name": "천양", "imgs": ["images/streamers/cheonyang.webp"] }
+            ],
+            achievements: [
+                { "id": "c1", "title": "이세계아이돌", "type": "CREW", "targetList": ["우왁굳", "아이네", "징버거", "릴파", "주르르", "고세구", "비챤"] }
+            ]
+        };
+
+        window.DATA = (typeof SOOP_DATA !== 'undefined') ? SOOP_DATA : window.FALLBACK_DATA;
+
+        window.CREWS_DB = window.DATA.achievements.filter(a => a.type === 'CREW').map(c => ({ id: c.id, name: c.title, members: c.targetList, chosung: window.getFirstChosung(c.title) })).sort((a, b) => a.name.localeCompare(b.name));
+        window.MEMBER_DB = window.DATA.streamers.map(s => ({ id: s.id, name: s.name, imgUrl: s.imgs[0] || 'images/soop_logo.svg', chosung: window.getFirstChosung(s.name) }));
+
+        window.state = {
+            screen: 'home',
+            gameMode: 'normal',
+            multiplayState: { isHost: false, roomId: null, players: {}, active: false, pendingRoomCode: null }, 
+            difficulty: 'advanced',
+            selectedCrews: [], searchCrewText: '', filterChosung: '전체',
+            availableMembers: [], selectedMembers: [],  
+            gridSize: 4, board: [], tiles: {},
+            score: 0, maxLevelReached: 0,
+            gameOver: false, gameWon: false, continueAfterWin: false, isAnimating: false,
+            gameImages: {}, guidePosition: 'bottom',
+            timeLeft: 15.0, maxTime: 15.0, timerInterval: null,
+            tutorialStep: 0,
+            simulatedBots: [] 
+        };
+
+        window.generateId = () => Math.random().toString(36).substr(2, 9);
+        window.getAvatarUrl = (name) => `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=00adef&color=fff&font-size=0.33`;
+
+        // === 3. 초기화 ===
         window.loadBestScoresLocal = function() {
             try {
                 const s = localStorage.getItem('soop2048BestScoresObj');
@@ -688,6 +734,90 @@
         };
         window.saveBestScoresLocal = function() {
             localStorage.setItem('soop2048BestScoresObj', JSON.stringify(window.userData.bestScores));
+        };
+
+        window.userData = { nickname: "", bestScores: window.loadBestScoresLocal() };
+
+        window.initPCMouseDrag = function() {
+            const nav = document.getElementById('crew-chosung-nav');
+            if(!nav) return;
+            let isDown = false, startX, scrollLeft;
+            nav.addEventListener('mousedown', (e) => {
+                isDown = true; nav.classList.add('cursor-grabbing');
+                startX = e.pageX - nav.offsetLeft; scrollLeft = nav.scrollLeft;
+            });
+            nav.addEventListener('mouseleave', () => { isDown = false; nav.classList.remove('cursor-grabbing'); });
+            nav.addEventListener('mouseup', () => { isDown = false; nav.classList.remove('cursor-grabbing'); });
+            nav.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - nav.offsetLeft;
+                nav.scrollLeft = scrollLeft - (x - startX) * 1.5;
+            });
+        };
+
+        function initApp() {
+            const hbs = document.getElementById('home-best-score');
+            if (hbs) hbs.innerText = (window.userData && window.userData.bestScores) ? window.userData.bestScores.normal.toLocaleString() : 0;
+            window.applyDarkMode();
+            window.initPCMouseDrag();
+            document.addEventListener('click', window.initAudio, { once: true });
+            document.addEventListener('touchstart', window.initAudio, { once: true });
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener("DOMContentLoaded", initApp);
+        } else {
+            setTimeout(initApp, 10);
+        }
+
+        // === 4. 화면 라우팅 및 설정 제어 ===
+        window.goToScreen = function(screenId) {
+            window.initAudio();
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+            const targetScreen = document.getElementById(`screen-${screenId}`);
+            if(targetScreen) targetScreen.classList.add('active');
+            
+            clearInterval(window.state.timerInterval);
+            
+            const header = document.getElementById('global-header');
+            if (screenId === 'home') {
+                if(header) header.style.display = 'none';
+                window.state.selectedMembers = [];
+            } else {
+                if(header) header.style.display = 'flex';
+            }
+            
+            window.state.screen = screenId;
+
+            if (screenId === 'crew_select') {
+                window.renderCrewChosungNav();
+                window.renderCrewList();
+                window.initPCMouseDrag();
+            } else if (screenId === 'member_select') {
+                window.updateAvailableMembers();
+                window.renderMemberList();
+            }
+        };
+
+        window.selectMode = function(mode) {
+            window.initAudio(); window.playSound('click');
+            window.state.gameMode = mode;
+            if (mode === 'survival') window.goToScreen('difficulty_select');
+            else window.goToScreen('crew_select');
+        };
+
+        window.setDifficulty = function(diff) {
+            window.initAudio(); window.playSound('click');
+            window.state.difficulty = diff;
+            window.goToScreen('crew_select');
+        };
+
+        window.goBackFromCrewSelect = function() {
+            window.playSound('click');
+            if (window.state.gameMode === 'survival') window.goToScreen('difficulty_select');
+            else if (window.state.gameMode === 'rank' || window.state.gameMode === 'custom') window.goToScreen('modeselect-multi');
+            else window.goToScreen('modeselect-single');
         };
 
         window.openSettings = function() {
@@ -726,8 +856,7 @@
         };
 
         window.openBestScores = function() {
-            window.initAudio();
-            window.playSound('click');
+            window.initAudio(); window.playSound('click');
             document.getElementById('score-normal').innerText = window.userData.bestScores.normal.toLocaleString();
             document.getElementById('score-surv-beginner').innerText = window.userData.bestScores.surv_beginner.toLocaleString();
             document.getElementById('score-surv-intermediate').innerText = window.userData.bestScores.surv_intermediate.toLocaleString();
@@ -746,7 +875,7 @@
             document.getElementById('best-scores-modal').classList.remove('flex');
         };
 
-        // Firebase Settings 
+        // === 5. Firebase 인증 및 동기화 ===
         const fC = {
             apiKey: atob("QUl6YVN5QTFBa0lVMVVqdXhiX0c4dWpJNFFHTlJXNkhjOHRwZnln"),
             authDomain: atob("ZG9uZ3BhMjAyNi0yZmRhNS5maXJlYmFzZWFwcC5jb20="),
@@ -761,8 +890,6 @@
         window.auth = typeof firebase !== 'undefined' ? firebase.auth() : null;
         window.db = typeof firebase !== 'undefined' ? firebase.database() : null;
         window.currentUser = null;
-        
-        window.userData = { nickname: "", bestScores: window.loadBestScoresLocal() };
 
         if (window.auth) {
             window.auth.onAuthStateChanged(async (u) => {
@@ -854,7 +981,7 @@
                 document.getElementById('user-name-home').innerText = window.userData.nickname;
             } catch (e) {}
         };
-        
+
         window.resetNicknameValidation = function(btnId) { document.getElementById(btnId).disabled = true; };
 
         window.checkNicknameDuplicate = async function(inputId, confirmBtnId) {
@@ -902,60 +1029,11 @@
             } catch(e) {}
         };
 
-        window.goToScreen = function(screenId) {
-            window.initAudio();
-            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-            const targetScreen = document.getElementById(`screen-${screenId}`);
-            if(targetScreen) targetScreen.classList.add('active');
-            
-            clearInterval(window.state.timerInterval);
-            
-            const header = document.getElementById('global-header');
-            if (screenId === 'home') {
-                if(header) header.style.display = 'none';
-                window.state.selectedMembers = [];
-            } else {
-                if(header) header.style.display = 'flex';
-            }
-            
-            window.state.screen = screenId;
-
-            if (screenId === 'crew_select') {
-                window.renderCrewChosungNav();
-                window.renderCrewList();
-                if(typeof window.initPCMouseDrag === 'function') window.initPCMouseDrag();
-            } else if (screenId === 'member_select') {
-                window.updateAvailableMembers();
-                window.renderMemberList();
-            }
-        };
-
-        window.selectMode = function(mode) {
-            window.initAudio(); window.playSound('click');
-            window.state.gameMode = mode;
-            if (mode === 'survival') {
-                window.goToScreen('difficulty_select');
-            } else {
-                window.goToScreen('crew_select');
-            }
-        };
-
-        window.setDifficulty = function(diff) {
-            window.initAudio(); window.playSound('click');
-            window.state.difficulty = diff;
-            window.goToScreen('crew_select');
-        };
-
-        window.goBackFromCrewSelect = function() {
-            window.playSound('click');
-            if (window.state.gameMode === 'survival') {
-                window.goToScreen('difficulty_select');
-            } else if (window.state.gameMode === 'rank' || window.state.gameMode === 'custom') {
-                window.goToScreen('modeselect-multi');
-            } else {
-                window.goToScreen('modeselect-single');
-            }
-        };
+        // === 6. 멤버 선택 UI (그룹/멤버) ===
+        document.getElementById('crew-search').addEventListener('input', (e) => {
+            window.state.searchCrewText = e.target.value;
+            window.renderCrewList();
+        });
 
         window.renderCrewChosungNav = function() {
             const nav = document.getElementById('crew-chosung-nav');
@@ -1145,23 +1223,32 @@
             }
         };
 
-        // === 멀티플레이 / 방 관리 로직 ===
-        window.joinRankMatch = async function() {
-            window.initAudio(); window.playSound('click');
-            if(window.state.selectedMembers.length !== 12) {
-                window.state.gameMode = 'rank';
-                window.state.difficulty = 'advanced'; 
-                window.goToScreen('crew_select');
-                return;
+        window.handleMemberSelectComplete = function() {
+            window.playSound('click');
+            if(window.state.selectedMembers.length !== 12) return;
+            
+            if(window.state.gameMode === 'custom') {
+                if(window.state.multiplayState.pendingRoomCode) {
+                    window.joinCustomRoom(window.state.multiplayState.pendingRoomCode);
+                    window.state.multiplayState.pendingRoomCode = null; // 사용 후 초기화
+                } else {
+                    window.initCustomRoom(true);
+                }
+            } else if (window.state.gameMode === 'rank') {
+                window.startRankMatchSimulation(); // 실제 RTDB 연동 랭크 시작
+            } else {
+                window.startGame();
             }
-            window.initRankRoom();
-        };
+        }
 
-        window.initRankRoom = async function() {
+        // === 7. 멀티플레이 대기실 관리 로직 (Firebase) ===
+        
+        // 랭크 매치 (실제 데이터베이스 연동)
+        window.startRankMatchSimulation = async function() {
             window.goToScreen('rank-matchmaking');
             document.getElementById('rank-countdown-container').classList.add('hidden');
             const list = document.getElementById('rank-player-list');
-            list.innerHTML = `<div class="p-3 border-2 border-soop bg-sky-50 rounded-xl flex justify-between items-center shadow-sm"><span class="font-bold text-sky-900">${window.userData.nickname} <span class="text-soop text-xs ml-1">(me)</span></span><span class="text-xs font-bold text-sky-500">점수 분석 중...</span></div>`;
+            list.innerHTML = `<div class="p-3 border-2 border-soop bg-sky-50 rounded-xl flex justify-between items-center shadow-sm"><span class="font-bold text-sky-900">${window.userData.nickname} <span class="text-soop text-xs ml-1">(me)</span></span><span class="text-xs font-bold text-sky-500">대기 중...</span></div>`;
             document.getElementById('rank-player-count').innerText = `1/8`;
             
             try {
@@ -1173,7 +1260,7 @@
                     for (let rId in rooms) {
                         const r = rooms[rId];
                         const pCount = r.players ? Object.keys(r.players).length : 0;
-                        if (pCount < 8 && !r.countdownUntil) {
+                        if (pCount < 8 && (!r.countdownUntil || r.countdownUntil > Date.now())) {
                             targetRoomId = rId;
                             break;
                         }
@@ -1254,6 +1341,21 @@
 
                 const cdContainer = document.getElementById('rank-countdown-container');
                 const cdEl = document.getElementById('rank-countdown');
+                
+                // 호스트가 카운트다운 관리 (4명 이상 시 시작)
+                if (window.state.multiplayState.isHost && data.status === 'waiting') {
+                    if (count >= 4 && !data.countdownUntil) {
+                        window.rankMatchRef.update({ countdownUntil: Date.now() + 30000 });
+                    } else if (count < 4 && data.countdownUntil) {
+                        window.rankMatchRef.update({ countdownUntil: null });
+                    }
+                    // 8명 꽉차면 즉시 시작
+                    if (count === 8) {
+                        window.rankMatchRef.update({ status: 'playing' });
+                    }
+                }
+
+                // 카운트다운 UI 업데이트
                 if (data.countdownUntil) {
                     cdContainer.classList.remove('hidden');
                     const updateCd = () => {
@@ -1275,17 +1377,6 @@
                     window.rankCdInterval = null;
                 }
 
-                if (window.state.multiplayState.isHost && data.status === 'waiting') {
-                    if (count >= 4 && !data.countdownUntil) {
-                        window.rankMatchRef.update({ countdownUntil: Date.now() + 30000 });
-                    } else if (count < 4 && data.countdownUntil) {
-                        window.rankMatchRef.update({ countdownUntil: null });
-                    }
-                    if (count === 8 && data.status === 'waiting') {
-                        window.rankMatchRef.update({ status: 'playing' });
-                    }
-                }
-
                 if (data.status === 'playing' && window.state.screen === 'rank-matchmaking') {
                     clearInterval(window.rankCdInterval);
                     window.startGame();
@@ -1302,21 +1393,7 @@
             window.goToScreen('modeselect-multi');
         };
 
-        window.createCustomMatch = function() {
-            window.initAudio(); window.playSound('click');
-            if (!window.currentUser || window.currentUser.isAnonymous) {
-                alert("커스텀 매치를 생성하려면 구글 로그인이 필요합니다.");
-                return;
-            }
-            if(window.state.selectedMembers.length !== 12) {
-                window.state.gameMode = 'custom';
-                window.state.difficulty = 'advanced'; 
-                window.goToScreen('crew_select');
-                return;
-            }
-            window.initCustomRoom(true);
-        };
-
+        // 커스텀 매치
         window.openJoinRoomModal = function() {
             window.initAudio(); window.playSound('click');
             document.getElementById('room-code-input').value = "";
@@ -1328,28 +1405,15 @@
             document.getElementById('join-room-modal').classList.add('hidden');
             document.getElementById('join-room-modal').classList.remove('flex');
         };
-
+        
         window.submitJoinRoom = function() {
             const code = document.getElementById('room-code-input').value.trim().toUpperCase();
             if(code.length !== 6) { alert("6자리 방 코드를 입력해주세요."); return; }
             window.closeJoinRoomModal();
+            
             window.state.gameMode = 'custom';
             window.state.multiplayState.pendingRoomCode = code; 
             window.goToScreen('crew_select');
-        };
-
-        window.finalizeMultiplayerSetup = function() {
-            if(window.state.gameMode === 'rank') {
-                window.initRankRoom();
-            } else if (window.state.gameMode === 'custom') {
-                if(window.state.multiplayState.pendingRoomCode) {
-                    window.joinCustomRoom(window.state.multiplayState.pendingRoomCode);
-                } else {
-                    window.initCustomRoom(true);
-                }
-            } else {
-                window.startGame();
-            }
         };
 
         window.initCustomRoom = async function(isHost) {
@@ -1550,13 +1614,20 @@
             else alert("방 코드: " + code);
         };
 
-        // === 8. 게임 로직 ===
-        window.startGame = function() {
-            if(window.state.selectedMembers.length !== 12) {
-                 window.finalizeMultiplayerSetup(); 
-                 return;
+        // URL 확인 및 자동 참가
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomCode = urlParams.get('room');
+            if (roomCode) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+                document.getElementById('room-code-input').value = roomCode;
+                setTimeout(() => { window.submitJoinRoom(); }, 500);
             }
-            
+        });
+
+
+        // === 8. 게임 플레이 로직 ===
+        window.startGame = function() {
             window.state.gameImages = {};
             window.state.selectedMembers.forEach((mId, idx) => {
                 const m = window.MEMBER_DB.find(x => x.id === mId);
@@ -1590,12 +1661,12 @@
             const leaderboard = document.getElementById('multiplayer-leaderboard-container');
 
             if (window.state.guidePosition === 'right') {
-                layout.className = "flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-5xl mx-auto gap-6 relative";
+                layout.className = "flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-6xl mx-auto gap-6 relative px-2";
                 guideWrap.className = "w-full max-w-md lg:w-48 bg-white p-4 rounded-2xl shadow-md border-2 border-soop shrink-0 flex flex-col items-center h-auto lg:h-[450px] overflow-y-auto hide-scrollbar transition-colors";
                 guideTitle.innerHTML = "진화 순서<br/>가이드"; 
                 guide.className = "grid grid-cols-2 gap-x-2 gap-y-3 justify-items-center w-full";
             } else {
-                layout.className = "flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-5xl mx-auto gap-6 relative";
+                layout.className = "flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-6xl mx-auto gap-6 relative px-2";
                 guideWrap.className = "w-full max-w-md sm:max-w-[450px] bg-white p-4 rounded-2xl shadow-md border-2 border-soop shrink-0 transition-colors";
                 guideTitle.innerHTML = "진화 순서 가이드";
                 guide.className = "grid grid-cols-6 grid-rows-2 gap-x-1 gap-y-3 justify-items-center w-full";
@@ -1823,6 +1894,19 @@
             window.renderGame();
         };
 
+        const getVector = (dir) => ({ 0: { x: 0, y: -1 }, 1: { x: 1, y: 0 }, 2: { x: 0, y: 1 }, 3: { x: -1, y: 0 } }[dir]);
+        const isValidPos = (r, c) => r >= 0 && r < window.state.gridSize && c >= 0 && c < window.state.gridSize;
+
+        window.findFarthestPosition = function(board, r, c, vector) {
+            let prevR = r, prevC = c;
+            let nextR = r + vector.y, nextC = c + vector.x;
+            while (isValidPos(nextR, nextC) && !board[nextR][nextC]) {
+                prevR = nextR; prevC = nextC;
+                nextR += vector.y; nextC += vector.x;
+            }
+            return { farthest: { r: prevR, c: prevC }, next: { r: nextR, c: nextC } };
+        };
+
         window.moveTiles = function(direction) {
             if (window.state.gameOver || window.state.isAnimating || (window.state.gameWon && !window.state.continueAfterWin)) return;
             
@@ -2014,7 +2098,7 @@
         window.startMultiplayerSync = function() {
             clearInterval(window.multiSyncInterval);
             const lb = document.getElementById('multiplayer-leaderboard-container');
-            if(lb) { lb.classList.remove('hidden'); lb.classList.add('lg:flex'); }
+            if(lb) { lb.classList.remove('hidden'); lb.classList.add('lg:block'); }
             
             window.multiSyncInterval = setInterval(() => {
                 if (window.state.gameOver || window.state.screen !== 'game') { clearInterval(window.multiSyncInterval); return; }
@@ -2029,12 +2113,14 @@
                     window.renderMultiplayerLeaderboard(window.state.simulatedBots);
                 } 
                 else if (window.state.gameMode === 'custom' && window.myPlayerRef) {
-                    window.myPlayerRef.update({ score: window.state.score, level: window.state.maxLevelReached }).catch(e=>0);
-                    if(window.roomRef) {
+                    if (window.currentUser) {
+                         window.myPlayerRef.update({ score: window.state.score, level: window.state.maxLevelReached }).catch(e=>0);
+                    }
+                    if (window.roomRef) {
                         window.roomRef.child('players').get().then(snap => {
                             if(snap.exists()) {
                                 const pData = snap.val();
-                                const pList = Object.keys(pData).filter(uid => uid !== window.currentUser.uid).map(uid => ({ id: uid, name: pData[uid].name, score: pData[uid].score||0, level: pData[uid].level||0 }));
+                                const pList = Object.keys(pData).filter(uid => window.currentUser && uid !== window.currentUser.uid).map(uid => ({ id: uid, name: pData[uid].name, score: pData[uid].score||0, level: pData[uid].level||0 }));
                                 window.renderMultiplayerLeaderboard(pList);
                             }
                         }).catch(e=>0);
@@ -2056,12 +2142,12 @@
             list.innerHTML = allP.map((p, idx) => {
                 const isMe = p.id === 'me';
                 return `
-                    <div class="flex justify-between items-center px-2 py-1.5 rounded-lg ${isMe ? 'bg-soop border border-sky-300' : 'bg-indigo-800 border border-indigo-600'}">
-                        <div class="flex items-center gap-1.5 overflow-hidden">
-                            <span class="text-sm font-black text-white shrink-0">${idx+1}.</span>
-                            <span class="text-xs font-bold text-white truncate max-w-[80px]">${p.name}</span>
+                    <div class="flex justify-between items-center px-3 py-2 rounded-xl mb-1.5 ${isMe ? 'bg-soop border-2 border-sky-300 shadow-md' : 'bg-indigo-800 border border-indigo-600'}">
+                        <div class="flex items-center gap-2 overflow-hidden">
+                            <span class="text-sm font-black text-white shrink-0 w-4 text-center">${idx+1}.</span>
+                            <span class="text-xs font-bold text-white truncate max-w-[90px]">${p.name}</span>
                         </div>
-                        <span class="text-xs font-mono text-indigo-200 shrink-0 ml-2">${p.score.toLocaleString()}</span>
+                        <span class="text-xs font-mono font-bold text-white shrink-0 ml-2 bg-black/20 px-2 py-0.5 rounded-lg">${p.score.toLocaleString()}</span>
                     </div>
                 `;
             }).join('');
@@ -2110,7 +2196,7 @@
         };
 
         // URL 확인 및 자동 참가
-        document.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const roomCode = urlParams.get('room');
             if (roomCode) {
@@ -2120,7 +2206,6 @@
             }
         });
 
-        // === 8. 키보드 및 터치 이벤트 리스너 ===
         window.addEventListener('keydown', (e) => {
             if (window.state.screen !== 'game') return;
             if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
