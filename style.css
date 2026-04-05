@@ -1,0 +1,83 @@
+body { font-family: 'Noto Sans KR', sans-serif; user-select: none; -webkit-user-select: none; transition: background-color 0.3s, color 0.3s; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.soop-text { font-weight: 900; color: #00adef; letter-spacing: -1px; }
+.btn-shadow { box-shadow: 0 4px 0 #007bb5; }
+.btn-shadow:active { transform: translateY(4px); box-shadow: none; }
+.btn-sky-shadow { box-shadow: 0 4px 0 #0284c7; }
+.btn-sky-shadow:active { transform: translateY(4px); box-shadow: none; }
+
+/* 텍스트 드래그/복사 허용 클래스 */
+.selectable-text { user-select: text !important; -webkit-user-select: text !important; }
+
+/* 마우스 드래그 커서 설정 */
+.cursor-grab { cursor: grab; }
+.cursor-grabbing { cursor: grabbing !important; }
+
+/* 이미지 자글거림(안티앨리어싱) 최적화 */
+.smooth-image {
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: crisp-edges;
+    transform: translateZ(0); 
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* 애플 스타일 로딩 스피너 (랭크 매치용) */
+.apple-spinner {
+    width: 80px; height: 80px;
+    border: 6px solid #e0e7ff; /* sky-100 */
+    border-top-color: #8b5cf6; /* violet-500 */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* 본인(Me) 강조 테두리 애니메이션 */
+.highlight-me {
+    border-color: var(--soop-blue) !important;
+    background-color: #f0f9ff !important; /* sky-50 */
+    box-shadow: 0 0 0 2px rgba(0, 173, 239, 0.3) !important;
+}
+
+/* === 다크모드 (Dark Mode) 글로벌 설정 === */
+body.dark-mode { background-color: #0f172a !important; color: #f8fafc !important; }
+body.dark-mode .bg-white, body.dark-mode .bg-white\/90, body.dark-mode .bg-white\/95 { background-color: #1e293b !important; border-color: #334155 !important; }
+body.dark-mode .text-sky-950, body.dark-mode .text-sky-900, body.dark-mode .text-sky-800, body.dark-mode .text-gray-800, body.dark-mode .text-gray-700 { color: #f1f5f9 !important; }
+body.dark-mode .text-sky-700, body.dark-mode .text-sky-600, body.dark-mode .text-gray-600, body.dark-mode .text-gray-500 { color: #cbd5e1 !important; }
+body.dark-mode .bg-sky-50, body.dark-mode .bg-sky-100, body.dark-mode .bg-sky-200, body.dark-mode .bg-gray-100, body.dark-mode .bg-gray-200 { background-color: #020617 !important; border-color: #1e293b !important; color: #cbd5e1 !important; }
+body.dark-mode .bg-sky-50\/70 { background-color: rgba(2, 6, 23, 0.7) !important; }
+body.dark-mode .border-sky-100, body.dark-mode .border-sky-200, body.dark-mode .border-sky-300, body.dark-mode .border-gray-100, body.dark-mode .border-gray-200 { border-color: #334155 !important; }
+body.dark-mode .text-soop { color: #38bdf8 !important; }
+body.dark-mode .bg-soop { background-color: #0284c7 !important; box-shadow: 0 4px 0 #0369a1 !important; }
+body.dark-mode .btn-shadow { box-shadow: 0 4px 0 #0369a1 !important; }
+body.dark-mode .bg-slate-200 { background-color: #334155 !important; color: #f1f5f9 !important; }
+body.dark-mode .text-slate-800, body.dark-mode .text-slate-700 { color: #f8fafc !important; } 
+body.dark-mode .text-slate-600 { color: #cbd5e1 !important; } 
+body.dark-mode .bg-slate-800 { background-color: #020617 !important; border-color: #000 !important; }
+body.dark-mode .shadow-sm, body.dark-mode .shadow-md, body.dark-mode .shadow-lg, body.dark-mode .shadow-xl { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important; }
+body.dark-mode .highlight-me { background-color: #0c4a6e !important; border-color: #38bdf8 !important; box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3) !important; }
+body.dark-mode #home-best-score-container { background-color: #1e293b !important; border: 1px solid #334155 !important; color: #cbd5e1 !important; }
+body.dark-mode #home-best-score { color: #38bdf8 !important; }
+
+/* 2048 Animation */
+.tile-wrapper { transition: transform 0.15s ease-in-out; position: absolute; }
+@keyframes popIn { 
+    0% { transform: scale(0); opacity: 0; } 
+    60% { transform: scale(1.15); opacity: 1; } 
+    100% { transform: scale(1); opacity: 1; } 
+}
+@keyframes pop { 
+    0% { transform: scale(1); } 
+    50% { transform: scale(1.15); } 
+    100% { transform: scale(1); } 
+}
+.animate-pop-in { animation: popIn 0.25s ease-out forwards; }
+.animate-pop { animation: pop 0.2s ease-out forwards; }
+
+/* Screen Transitions */
+.screen { display: none; animation: fadeIn 0.3s ease-in-out; }
+.screen.active { display: flex; flex-direction: column; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
