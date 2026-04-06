@@ -476,20 +476,20 @@
                 <input type="text" id="member-search" placeholder="스트리머 이름 검색" class="w-full p-2 sm:p-2.5 border-2 border-sky-200 rounded-xl focus:border-soop focus:outline-none transition-colors font-medium bg-sky-50 text-xs sm:text-sm">
                 
                 <!-- 초성 네비게이션 -->
-                <div class="relative flex items-center w-full group mt-1">
-                    <div class="flex gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar py-1 w-full scroll-smooth cursor-grab px-1" id="member-chosung-nav"></div>
-                </div>
+            <div class="relative flex items-center w-full group mt-1">
+                <div class="flex gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar py-1 w-full scroll-smooth cursor-grab px-1" id="member-chosung-nav"></div>
             </div>
+        </div>
 
-            <!-- 멤버 리스트 그리드 (반응형: 4칸 -> 5칸 -> 6칸 -> 8칸) -->
-            <div class="w-full max-w-4xl mx-auto px-2 sm:px-4">
-                <div id="member-list-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3 lg:gap-4 mb-4">
-                    <!-- 멤버 동적 생성 -->
-                </div>
+        <!-- 멤버 리스트 그리드 (기본 6명 배치, 화면 크기에 따라 유동적 변형) -->
+        <div class="w-full max-w-4xl mx-auto px-2 sm:px-4">
+            <div id="member-list-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3 lg:gap-4 mb-4">
+                <!-- 멤버 동적 생성 -->
             </div>
+        </div>
 
-            <!-- 페이지네이션 컨트롤 -->
-            <div id="pagination-controls" class="flex justify-center items-center gap-3 sm:gap-4 mb-32">
+        <!-- 페이지네이션 컨트롤 -->
+        <div id="pagination-controls" class="flex justify-center items-center gap-3 sm:gap-4 mb-32">
                 <!-- 동적 생성 -->
             </div>
 
@@ -525,31 +525,31 @@
                 </button>
                 <h2 class="text-lg sm:text-xl font-extrabold text-sky-950 transition-colors text-center px-2">2. 진화 순서 정하기</h2>
                 <div class="flex gap-1.5 sm:gap-2">
-                    <button onclick="clearEvolutionOrder()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors shrink-0">❌ 취소</button>
-                    <button onclick="randomEvoOrder()" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
-                        <span>🎲</span> 무작위 배치
-                    </button>
-                </div>
+                <button onclick="clearEvolutionOrder()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors shrink-0">❌ 취소</button>
+                <button onclick="randomEvoOrder()" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
+                    <span>🎲</span> 무작위 배치
+                </button>
             </div>
+        </div>
 
-            <!-- 배치 대기열 (반응형 그리드) -->
-            <div class="w-full max-w-4xl mx-auto bg-white p-3 sm:p-5 rounded-2xl shadow-sm border border-sky-100 mb-4 sm:mb-6 transition-colors">
-                <h3 class="text-center font-bold text-sky-800 mb-3 sm:mb-4 text-xs sm:text-sm">아래 스트리머를 클릭하여 순서를 정해주세요.</h3>
-                <div id="evo-available-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-4 justify-items-center w-full">
-                    <!-- 스크립트에서 추가 -->
-                </div>
+        <!-- 배치 대기열 (기본 6개씩 유동 배치) -->
+        <div class="w-full max-w-4xl mx-auto bg-white p-3 sm:p-5 rounded-2xl shadow-sm border border-sky-100 mb-4 sm:mb-6 transition-colors">
+            <h3 class="text-center font-bold text-sky-800 mb-3 sm:mb-4 text-xs sm:text-sm">아래 스트리머를 클릭하여 순서를 정해주세요.</h3>
+            <div id="evo-available-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 md:grid-cols-6 lg:grid-cols-6 gap-2 sm:gap-3 justify-items-center w-full">
+                <!-- 스크립트에서 추가 -->
             </div>
+        </div>
 
-            <!-- 진화 슬롯 (반응형 그리드) -->
-            <div class="w-full max-w-4xl mx-auto px-2 pb-8">
-                <h3 class="text-center font-bold text-sky-950 mb-3 sm:mb-4 text-xs sm:text-sm">진화 순서 (클릭하여 취소)</h3>
-                <div id="evo-slots-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-4 justify-items-center w-full">
-                    <!-- 스크립트에서 동적 슬롯 생성 -->
-                </div>
+        <!-- 진화 슬롯 (기본 6개씩 유동 배치) -->
+        <div class="w-full max-w-4xl mx-auto px-2 pb-8">
+            <h3 class="text-center font-bold text-sky-950 mb-3 sm:mb-4 text-xs sm:text-sm">진화 순서 (클릭하여 취소)</h3>
+            <div id="evo-slots-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 md:grid-cols-6 lg:grid-cols-6 gap-2 sm:gap-3 justify-items-center w-full">
+                <!-- 스크립트에서 동적 슬롯 생성 -->
             </div>
+        </div>
 
-            <!-- 하단 시작 버튼 -->
-            <div class="fixed bottom-0 left-0 w-full bg-white border-t border-sky-200 p-3 sm:p-4 z-10 shadow-[0_-4px_10px_rgba(0,173,239,0.05)] transition-colors flex justify-center">
+        <!-- 하단 시작 버튼 -->
+        <div class="fixed bottom-0 left-0 w-full bg-white border-t border-sky-200 p-3 sm:p-4 z-10 shadow-[0_-4px_10px_rgba(0,173,239,0.05)] transition-colors flex justify-center">
                 <button id="btn-start-game" onclick="startGame()" disabled class="w-full max-w-5xl py-3 sm:py-4 rounded-xl font-bold text-lg sm:text-xl transition-all bg-sky-200 text-sky-500 cursor-not-allowed">
                     순서 배치 중...
                 </button>
@@ -1444,6 +1444,10 @@
             const endIdx = startIdx + window.state.memberItemsPerPage;
             const paginated = window.state.filteredMembers.slice(startIdx, endIdx);
             
+            const reqCount = window.getRequiredMembersCount();
+            const lgCols = reqCount <= 12 ? 'lg:grid-cols-6' : 'lg:grid-cols-7';
+            grid.className = `grid grid-cols-4 min-[400px]:grid-cols-5 md:grid-cols-6 ${lgCols} gap-2 sm:gap-3 lg:gap-4 mb-4`;
+
             grid.innerHTML = paginated.map(m => {
                 const isSel = window.state.selectedMembers.includes(m.id);
                 
@@ -1637,7 +1641,11 @@
             const slotsGrid = document.getElementById('evo-slots-grid');
             const reqCount = window.getRequiredMembersCount();
             
-            // 위쪽: 배치 가능한 멤버들 (크기 확대, 반응형 그리드)
+            const gridClass = `grid grid-cols-4 min-[400px]:grid-cols-5 md:grid-cols-6 ${reqCount <= 12 ? 'lg:grid-cols-6' : 'lg:grid-cols-7'} gap-2 sm:gap-3 justify-items-center w-full`;
+            availGrid.className = gridClass;
+            slotsGrid.className = gridClass;
+
+            // 위쪽: 배치 가능한 멤버들
             let availHtml = '';
             window.state.selectedMembers.forEach(mId => {
                 const m = MEMBER_DB.find(x => x.id === mId);
@@ -1655,7 +1663,7 @@
             });
             availGrid.innerHTML = availHtml;
 
-            // 아래쪽: 1~N단계 슬롯 (반응형 그리드)
+            // 아래쪽: 1~N단계 슬롯
             let slotsHtml = '';
             for(let i=0; i<reqCount; i++) {
                 const mId = window.state.evolutionOrder[i];
