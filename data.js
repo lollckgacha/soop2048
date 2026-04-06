@@ -2148,10 +2148,10 @@ const SOOP_DATA = {
     },
     {
         "id": "s267",
-        "name": "임재천",
-        "channelUrl": "https://www.sooplive.co.kr/station/t730172",
+        "name": "냐쵸",
+        "channelUrl": "https://www.sooplive.com/station/natty09",
         "imgs": [
-            "images/streamers/imjaecheon.webp"
+            "images/streamers/nyacho.png"
         ]
     },
     {
@@ -5249,7 +5249,6 @@ const SOOP_DATA = {
         "targetList": [
             "마이곰이",
             "밍턴",
-            "임재천",
             "하디아"
         ]
     },
