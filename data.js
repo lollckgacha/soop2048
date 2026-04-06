@@ -5413,8 +5413,8 @@ const SOOP_DATA = {
             "누눙지",
             "제갈금자",
             "모구구",
-            "하로하",
-            "데네브"
+            "하로하"
+            
         ]
     },
     {
@@ -5424,13 +5424,11 @@ const SOOP_DATA = {
         "reward": 6,
         "logoUrl": "images/logos/kangssi.png",
         "targetList": [
-            "큐피",
-            "강하나",
             "깡담비",
             "깐숙",
             "망개",
             "두부랑",
-            "문다틸"
+            "모요"
         ]
     },
     {
