@@ -70,10 +70,6 @@
         body.dark-mode .bg-slate-800 { background-color: #020617 !important; border-color: #000 !important; }
         body.dark-mode .shadow-sm, body.dark-mode .shadow-md, body.dark-mode .shadow-lg, body.dark-mode .shadow-xl { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important; }
         
-        /* 홈 화면 최고점수 다크모드 시인성 개선 */
-        body.dark-mode #home-best-score-container { background-color: #1e293b !important; border: 1px solid #334155 !important; color: #cbd5e1 !important; }
-        body.dark-mode #home-best-score { color: #38bdf8 !important; }
-        
         /* 2048 Animation */
         .tile-wrapper { transition: transform 0.15s ease-in-out; position: absolute; }
         @keyframes popIn { 
@@ -175,6 +171,45 @@
         </div>
     </div>
 
+    <!-- 최고 점수 모달창 -->
+    <div id="best-score-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] flex-col items-center justify-center p-4 animate-fade-in">
+        <div class="bg-white p-6 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-4 relative transition-colors">
+            <h2 class="text-2xl font-black text-sky-950 text-center">🏆 최고 점수</h2>
+            <button onclick="closeBestScoreModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
+            
+            <div class="flex flex-col gap-2 mt-2">
+                <div class="flex justify-between bg-sky-50 p-3 rounded-xl border border-sky-200 transition-colors">
+                    <span class="font-bold text-sky-800">🎮 일반 모드</span>
+                    <span id="score-val-normal" class="font-black text-soop">0</span>
+                </div>
+                <div class="flex justify-between bg-green-50 p-3 rounded-xl border border-green-200 transition-colors">
+                    <span class="font-bold text-green-800">🌱 서바이벌 (초보)</span>
+                    <span id="score-val-beginner" class="font-black text-green-600">0</span>
+                </div>
+                <div class="flex justify-between bg-blue-50 p-3 rounded-xl border border-blue-200 transition-colors">
+                    <span class="font-bold text-blue-800">💧 서바이벌 (중수)</span>
+                    <span id="score-val-intermediate" class="font-black text-blue-600">0</span>
+                </div>
+                <div class="flex justify-between bg-purple-50 p-3 rounded-xl border border-purple-200 transition-colors">
+                    <span class="font-bold text-purple-800">🔥 서바이벌 (고수)</span>
+                    <span id="score-val-advanced" class="font-black text-purple-600">0</span>
+                </div>
+                <div class="flex justify-between bg-rose-50 p-3 rounded-xl border border-rose-200 transition-colors">
+                    <span class="font-bold text-rose-800">⚡ 서바이벌 (전문가)</span>
+                    <span id="score-val-expert" class="font-black text-rose-600">0</span>
+                </div>
+                <div class="flex justify-between bg-slate-100 p-3 rounded-xl border border-slate-300 transition-colors">
+                    <span class="font-bold text-slate-800">👑 서바이벌 (마스터)</span>
+                    <span id="score-val-master" class="font-black text-slate-600">0</span>
+                </div>
+            </div>
+            
+            <button onclick="closeBestScoreModal()" class="mt-2 bg-soop hover:bg-sky-500 text-white font-bold py-3 rounded-xl transition-colors shadow-sm">
+                닫기
+            </button>
+        </div>
+    </div>
+
     <!-- 플레이 판 크기 설정 모달 (인게임 하단 고정 패널) -->
     <div id="board-scale-modal" class="hidden fixed inset-x-0 bottom-0 z-[300] bg-white/95 backdrop-blur-md border-t border-sky-200 rounded-t-[2rem] p-6 pb-10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex-col items-center transition-colors">
         <div class="flex justify-between items-center w-full max-w-md mb-4">
@@ -254,9 +289,10 @@
                         <span>⚙️</span> 환경 설정
                     </button>
                     
-                    <div id="home-best-score-container" class="text-center font-bold text-sky-600 bg-sky-100/80 py-3 rounded-xl shadow-inner transition-colors">
-                        최고점수: <span id="home-best-score" class="text-soop text-lg">0</span>점
-                    </div>
+                    <!-- 최고 점수 버튼 -->
+                    <button onclick="openBestScoreModal()" class="text-center font-bold text-sky-600 bg-sky-100/80 hover:bg-sky-200/80 py-3 rounded-xl shadow-sm transition-colors border border-sky-200 active:scale-95 flex items-center justify-center gap-2">
+                        <span>🏆</span> 최고 점수 기록
+                    </button>
                 </div>
 
                 <!-- 제작자 공지사항 박스 -->
@@ -266,6 +302,7 @@
                     </h3>
                     <ul class="list-disc pl-5 space-y-1.5 text-xs text-sky-700 font-medium leading-relaxed transition-colors">
                         <li>구글 로그인 시 기기간 점수가 동기화됩니다.</li>
+                        <li>다크모드에서 일부 ui의 가시성이 좋지않을수 있습니다. (패치예정)</li>
                         <li>스트리머 그룹/크루 정보와 아바타 이미지는 2026년 1월 말 기준이며 지속적으로 최신화 해나갈 예정입니다.</li>
                         <li>정보 최신화가 필요한 부분은 아래 이메일로 제보 부탁드립니다. </li>
                         <li>(ex. oo님 아바타 바뀌었어요! oo크루에 oo님이 없어요! oo님 더이상 oo크루 소속이 아니에요! 등) </li>
@@ -458,7 +495,7 @@
                         <div class="text-sky-500 text-[10px] font-bold uppercase transition-colors">점수</div>
                         <div id="game-score" class="text-sky-950 text-lg font-black leading-none transition-colors">0</div>
                     </div>
-                    <div class="bg-soop px-3 py-1.5 rounded-xl text-center shadow-md min-w-[65px]">
+                    <div class="bg-soop px-3 py-1.5 rounded-xl text-center shadow-md min-w-[65px] cursor-pointer hover:bg-sky-500 transition-colors" onclick="openBestScoreModal()">
                         <div class="text-sky-100 text-[10px] font-bold uppercase">최고점수</div>
                         <div id="game-best-score" class="text-white text-lg font-black leading-none">0</div>
                     </div>
@@ -710,6 +747,26 @@
             }
         };
 
+        // 최고 점수 모달
+        window.openBestScoreModal = function() {
+            window.playSound('click');
+            document.getElementById('score-val-normal').innerText = window.state.bestScores.normal;
+            document.getElementById('score-val-beginner').innerText = window.state.bestScores.beginner;
+            document.getElementById('score-val-intermediate').innerText = window.state.bestScores.intermediate;
+            document.getElementById('score-val-advanced').innerText = window.state.bestScores.advanced;
+            document.getElementById('score-val-expert').innerText = window.state.bestScores.expert;
+            document.getElementById('score-val-master').innerText = window.state.bestScores.master;
+            
+            document.getElementById('best-score-modal').classList.remove('hidden');
+            document.getElementById('best-score-modal').classList.add('flex');
+        };
+
+        window.closeBestScoreModal = function() {
+            window.playSound('click');
+            document.getElementById('best-score-modal').classList.add('hidden');
+            document.getElementById('best-score-modal').classList.remove('flex');
+        };
+
         // === Firebase 설정 ===
         const fC = {
             apiKey: atob("QUl6YVN5QTFBa0lVMVVqdXhiX0c4dWpJNFFHTlJXNkhjOHRwZnln"),
@@ -726,7 +783,7 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
         let currentUser = null;
-        window.userData = { nickname: "", bestScore: parseInt(localStorage.getItem('soopCustom2048Best') || '0') };
+        window.userData = { nickname: "", bestScores: {} }; // bestScores 객체로 변경
 
         onAuthStateChanged(auth, async (u) => {
             currentUser = u;
@@ -756,15 +813,17 @@
                 if (s.exists()) {
                     const data = s.val();
                     window.userData.nickname = data.nickname || "";
-                    if(data.bestScore > window.state.bestScore) {
-                        window.state.bestScore = data.bestScore;
-                        localStorage.setItem('soopCustom2048Best', data.bestScore);
-                        document.getElementById('home-best-score').innerText = window.state.bestScore;
-                        if(document.getElementById('game-best-score')) {
-                            document.getElementById('game-best-score').innerText = window.state.bestScore;
-                        }
+                    
+                    // Firebase에 있는 데이터 병합
+                    if (data.bestScores) {
+                        window.state.bestScores = { ...window.state.bestScores, ...data.bestScores };
+                    } else if (data.bestScore && data.bestScore > window.state.bestScores.normal) {
+                        // 하위 호환성: 옛날 bestScore 필드
+                        window.state.bestScores.normal = data.bestScore;
                     }
+                    localStorage.setItem('soop2048BestScores', JSON.stringify(window.state.bestScores));
                 } else {
+                    window.userData.bestScores = window.state.bestScores;
                     await set(ref(db, 'users/' + uid + '/soop2048'), window.userData);
                 }
                 
@@ -779,10 +838,10 @@
             } catch(e) { console.error("데이터 로드 실패", e); }
         }
 
-        async function saveBestScoreToFirebase(score) {
+        async function saveBestScoreToFirebase(scores) {
             if(currentUser && !currentUser.isAnonymous) {
                 try {
-                    await set(ref(db, 'users/' + currentUser.uid + '/soop2048/bestScore'), score);
+                    await set(ref(db, 'users/' + currentUser.uid + '/soop2048/bestScores'), scores);
                 } catch(e) {}
             }
         }
@@ -927,6 +986,18 @@
         })).sort((a,b) => a.name.localeCompare(b.name));
 
         // === 2. 전역 상태 (State) ===
+        let savedBestScores = { normal: 0, beginner: 0, intermediate: 0, advanced: 0, expert: 0, master: 0 };
+        try {
+            // 하위 호환성 로드
+            const legacyBest = parseInt(localStorage.getItem('soopCustom2048Best') || '0');
+            const storedScores = JSON.parse(localStorage.getItem('soop2048BestScores'));
+            if (storedScores) {
+                savedBestScores = { ...savedBestScores, ...storedScores };
+            } else if (legacyBest > 0) {
+                savedBestScores.normal = legacyBest;
+            }
+        } catch(e) {}
+
         window.state = {
             screen: 'home',
             gameMode: 'normal', 
@@ -948,7 +1019,7 @@
             board: [],
             tiles: {},
             score: 0,
-            bestScore: parseInt(localStorage.getItem('soopCustom2048Best') || '0'),
+            bestScores: savedBestScores,
             gameOver: false,
             gameWon: false,
             continueAfterWin: false,
@@ -962,10 +1033,12 @@
         };
 
         window.generateId = () => Math.random().toString(36).substr(2, 9);
+        
+        window.getCurrentModeKey = function() {
+            return window.state.gameMode === 'normal' ? 'normal' : window.state.difficulty;
+        };
 
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById('home-best-score').innerText = window.state.bestScore;
-            
             // 최근 선택한 멤버 & 진화 순서 불러오기
             try {
                 const savedMembers = JSON.parse(localStorage.getItem('soop2048LastSelectedMembers'));
@@ -1625,6 +1698,9 @@
             clearInterval(window.state.timerInterval);
             document.getElementById('tutorial-tooltip').classList.add('hidden');
             
+            const modeKey = window.getCurrentModeKey();
+            document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey];
+            
             const modeSubtitle = document.getElementById('game-mode-subtitle');
             if(window.state.gameMode === 'survival') {
                 modeSubtitle.innerText = "서바이벌 모드: 시간 내에 진화시키세요!";
@@ -1700,18 +1776,20 @@
 
         window.updateScore = function(add) {
             window.state.score += add;
-            if(window.state.score > window.state.bestScore) {
-                window.state.bestScore = window.state.score;
-                localStorage.setItem('soopCustom2048Best', window.state.bestScore);
-                document.getElementById('home-best-score').innerText = window.state.bestScore;
-                document.getElementById('game-best-score').innerText = window.state.bestScore;
-                saveBestScoreToFirebase(window.state.bestScore);
+            const modeKey = window.getCurrentModeKey();
+            if(window.state.score > window.state.bestScores[modeKey]) {
+                window.state.bestScores[modeKey] = window.state.score;
+                localStorage.setItem('soop2048BestScores', JSON.stringify(window.state.bestScores));
+                document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey];
+                saveBestScoreToFirebase(window.state.bestScores);
             }
         };
 
         window.renderGame = function() {
             document.getElementById('game-score').innerText = window.state.score;
-            document.getElementById('game-best-score').innerText = window.state.bestScore;
+            
+            const modeKey = window.getCurrentModeKey();
+            document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey];
 
             const container = document.getElementById('game-tiles-container');
             container.innerHTML = Object.values(window.state.tiles).map(t => {
