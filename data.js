@@ -1964,10 +1964,10 @@ const SOOP_DATA = {
     },
     {
         "id": "s244",
-        "name": "우루루",
-        "channelUrl": "https://www.sooplive.co.kr/station/wooruru",
+        "name": "나른자",
+        "channelUrl": "https://www.sooplive.com/station/wldnjsdpqh",
         "imgs": [
-            "images/streamers/ururu.png"
+            "images/streamers/narunza.png"
         ]
     },
     {
@@ -5112,14 +5112,6 @@ const SOOP_DATA = {
         "channelUrl": "https://www.sooplive.co.kr/station/n0716foryou",
         "imgs": [
             "images/streamers/punyang.png"
-        ]
-    },
-    {
-        "id": "s638",
-        "name": "나른자",
-        "channelUrl": "https://www.sooplive.com/station/wldnjsdpqh",
-        "imgs": [
-            "images/streamers/narunza.png"
         ]
     }
 ],
