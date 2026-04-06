@@ -1031,7 +1031,7 @@ const SOOP_DATA = {
         "name": "모카",
         "channelUrl": "https://www.sooplive.co.kr/station/mocamu2",
         "imgs": [
-            "images/streamers/moka.png"
+            "images/streamers/moka2.png"
         ]
     },
     {
