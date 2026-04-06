@@ -47,6 +47,16 @@
             backface-visibility: hidden;
         }
 
+        /* 글씨 외곽선 (배경 없이 가독성 향상) */
+        .text-stroke {
+            text-shadow: 
+                -1px -1px 0 #000,  
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                 0px  2px 4px rgba(0,0,0,0.8);
+        }
+
         /* 플레이 판 크기 라디오 버튼 디자인 */
         .scale-radio:checked + div { background-color: #00adef !important; color: white !important; border-color: #00adef !important; }
         body.dark-mode .scale-radio:checked + div { background-color: #0284c7 !important; border-color: #0369a1 !important; }
@@ -1438,8 +1448,8 @@
                     <div onclick="toggleMember('${m.id}')" class="relative w-full aspect-square rounded-2xl bg-white shadow-sm border-2 flex flex-col items-center justify-center cursor-pointer transition-transform hover:scale-105 select-none overflow-hidden ${isSel ? 'border-soop ring-2 ring-soop/30' : 'border-sky-100'}">
                         <img src="${m.imgUrl}" onerror="this.src='${window.getAvatarUrl(m.name)}'" class="absolute inset-0 w-full h-full object-cover smooth-image" alt="${m.name}">
                         ${isSel ? `<div class="absolute top-1.5 left-1.5 w-6 h-6 sm:w-7 sm:h-7 bg-soop text-white font-black text-[12px] sm:text-[14px] rounded-full flex items-center justify-center shadow-md z-20">✓</div>` : ''}
-                        <div class="absolute bottom-0 left-0 w-full bg-sky-950/70 pt-2 pb-1.5 z-10 flex justify-center backdrop-blur-[2px]">
-                            <span class="text-[11px] sm:text-[12px] font-bold w-full text-center px-1 overflow-hidden text-ellipsis whitespace-nowrap text-white">${m.name}</span>
+                        <div class="absolute bottom-0 left-0 w-full pb-1 z-10 flex justify-center pointer-events-none">
+                            <span class="text-[11px] sm:text-[12px] font-extrabold w-full text-center px-1 overflow-hidden text-ellipsis whitespace-nowrap text-white text-stroke">${m.name}</span>
                         </div>
                     </div>
                 `;
@@ -1964,8 +1974,8 @@
                     <div class="${classes}" style="width:${sizePct}%; height:${sizePct}%; transform: translate(${t.c * 100}%, ${t.r * 100}%);">
                         <div class="${innerClasses}">
                             <img src="${lvlData.imgUrl}" onerror="this.src='${window.getAvatarUrl(lvlData.name)}'" class="absolute inset-0 w-full h-full object-cover smooth-image z-0">
-                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900/90 to-transparent pt-3 sm:pt-4 pb-1 z-10 flex justify-center">
-                                <span class="text-[9px] sm:text-[10px] md:text-xs font-extrabold tracking-tight px-1 text-center leading-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-white drop-shadow-md">
+                            <div class="absolute bottom-0 left-0 w-full pb-1 z-10 flex justify-center pointer-events-none">
+                                <span class="text-[9px] sm:text-[10px] md:text-xs font-extrabold tracking-tight px-1 text-center leading-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-white text-stroke">
                                     ${lvlData.name}
                                 </span>
                             </div>
