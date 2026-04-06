@@ -5113,6 +5113,22 @@ const SOOP_DATA = {
         "imgs": [
             "images/streamers/punyang.png"
         ]
+    },
+    {
+        "id": "s638",
+        "name": "김나오",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/.png"
+        ]
+    },
+    {
+        "id": "s639",
+        "name": "공태연",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/.png"
+        ]
     }
 ],
     achievements: [
@@ -5280,7 +5296,7 @@ const SOOP_DATA = {
             "김나오",
             "찌미",
             "망야",
-            "뽀끔",
+            "뽀끔o3o",
             "성하늘"
         ]
     },
@@ -5568,7 +5584,7 @@ const SOOP_DATA = {
             "김쿼카",
             "니니밍",
             "라무",
-            "린",
+            "린코",
             "메루",
             "모나양",
             "목츄리",
@@ -5796,7 +5812,6 @@ const SOOP_DATA = {
            "햄쩌구",
            "도페",
            "룬나",
-           "리퍼석",
            "백소라",
            "윤세람",
            "지오",
