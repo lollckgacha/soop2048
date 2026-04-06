@@ -2077,7 +2077,8 @@
                             const targetId = newBoard[next.r][next.c];
                             const newValue = tile.value + 1;
                             
-                            scoreIncrease += Math.pow(2, newValue) * 10;
+                            // 기존 10배로 증가하던 점수를 오리지널 2048과 동일한 획득량으로 너프
+                            scoreIncrease += Math.pow(2, newValue);
                             if (newValue === reqCount) reachedMaxLevel = true;
 
                             mergedThisTurnArray[next.r][next.c] = true;
