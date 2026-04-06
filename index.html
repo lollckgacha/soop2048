@@ -70,6 +70,36 @@
         body.dark-mode .bg-slate-800 { background-color: #020617 !important; border-color: #000 !important; }
         body.dark-mode .shadow-sm, body.dark-mode .shadow-md, body.dark-mode .shadow-lg, body.dark-mode .shadow-xl { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important; }
         
+        /* 홈 화면 최고점수 다크모드 시인성 개선 */
+        body.dark-mode #home-best-score-container { background-color: #1e293b !important; border: 1px solid #334155 !important; color: #cbd5e1 !important; }
+        body.dark-mode #home-best-score { color: #38bdf8 !important; }
+
+        /* 다크모드 추가: 메인 화면 버튼 및 최고점수 모달창 다크모드 시인성 완벽 개선 */
+        body.dark-mode .bg-slate-400 { background-color: #475569 !important; box-shadow: 0 4px 0 #1e293b !important; }
+        body.dark-mode .hover\:bg-slate-500:hover { background-color: #334155 !important; }
+        body.dark-mode .bg-sky-100\/80 { background-color: #1e293b !important; color: #38bdf8 !important; border-color: #334155 !important; }
+        body.dark-mode .hover\:bg-sky-200\/80:hover { background-color: #0f172a !important; }
+
+        body.dark-mode .bg-green-50 { background-color: rgba(6, 78, 59, 0.5) !important; border-color: #065f46 !important; }
+        body.dark-mode .text-green-800 { color: #a7f3d0 !important; }
+        body.dark-mode .text-green-600 { color: #6ee7b7 !important; }
+        
+        body.dark-mode .bg-blue-50 { background-color: rgba(30, 58, 138, 0.5) !important; border-color: #1e40af !important; }
+        body.dark-mode .text-blue-800 { color: #bfdbfe !important; }
+        body.dark-mode .text-blue-600 { color: #93c5fd !important; }
+        
+        body.dark-mode .bg-purple-50 { background-color: rgba(76, 29, 149, 0.5) !important; border-color: #5b21b6 !important; }
+        body.dark-mode .text-purple-800 { color: #e9d5ff !important; }
+        body.dark-mode .text-purple-600 { color: #d8b4fe !important; }
+        
+        body.dark-mode .bg-rose-50 { background-color: rgba(136, 19, 55, 0.5) !important; border-color: #9f1239 !important; }
+        body.dark-mode .text-rose-800 { color: #fecdd3 !important; }
+        body.dark-mode .text-rose-600 { color: #fda4af !important; }
+        body.dark-mode .text-rose-900 { color: #fecdd3 !important; }
+        
+        body.dark-mode .bg-slate-100 { background-color: rgba(30, 41, 59, 0.8) !important; border-color: #334155 !important; }
+        body.dark-mode .border-slate-300 { border-color: #475569 !important; }
+        
         /* 2048 Animation */
         .tile-wrapper { transition: transform 0.15s ease-in-out; position: absolute; }
         @keyframes popIn { 
@@ -173,38 +203,50 @@
 
     <!-- 최고 점수 모달창 -->
     <div id="best-score-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] flex-col items-center justify-center p-4 animate-fade-in">
-        <div class="bg-white p-6 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-4 relative transition-colors">
-            <h2 class="text-2xl font-black text-sky-950 text-center">🏆 최고 점수</h2>
-            <button onclick="closeBestScoreModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
-            
-            <div class="flex flex-col gap-2 mt-2">
-                <div class="flex justify-between bg-sky-50 p-3 rounded-xl border border-sky-200 transition-colors">
-                    <span class="font-bold text-sky-800">🎮 일반 모드</span>
-                    <span id="score-val-normal" class="font-black text-soop">0</span>
-                </div>
-                <div class="flex justify-between bg-green-50 p-3 rounded-xl border border-green-200 transition-colors">
-                    <span class="font-bold text-green-800">🌱 서바이벌 (초보)</span>
-                    <span id="score-val-beginner" class="font-black text-green-600">0</span>
-                </div>
-                <div class="flex justify-between bg-blue-50 p-3 rounded-xl border border-blue-200 transition-colors">
-                    <span class="font-bold text-blue-800">💧 서바이벌 (중수)</span>
-                    <span id="score-val-intermediate" class="font-black text-blue-600">0</span>
-                </div>
-                <div class="flex justify-between bg-purple-50 p-3 rounded-xl border border-purple-200 transition-colors">
-                    <span class="font-bold text-purple-800">🔥 서바이벌 (고수)</span>
-                    <span id="score-val-advanced" class="font-black text-purple-600">0</span>
-                </div>
-                <div class="flex justify-between bg-rose-50 p-3 rounded-xl border border-rose-200 transition-colors">
-                    <span class="font-bold text-rose-800">⚡ 서바이벌 (전문가)</span>
-                    <span id="score-val-expert" class="font-black text-rose-600">0</span>
-                </div>
-                <div class="flex justify-between bg-slate-100 p-3 rounded-xl border border-slate-300 transition-colors">
-                    <span class="font-bold text-slate-800">👑 서바이벌 (마스터)</span>
-                    <span id="score-val-master" class="font-black text-slate-600">0</span>
+        <div class="bg-white p-5 sm:p-6 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-3 relative transition-colors max-h-[90vh] overflow-hidden flex flex-col">
+            <div class="shrink-0 relative">
+                <h2 class="text-2xl font-black text-sky-950 text-center pb-2">🏆 최고 점수</h2>
+                <button onclick="closeBestScoreModal()" class="absolute top-0 right-0 text-gray-400 hover:text-gray-600 text-xl font-bold z-20">✕</button>
+                
+                <!-- 판 크기 탭 -->
+                <div class="flex justify-center gap-1.5 sm:gap-2 mt-2 border-b-2 border-sky-100 pb-3 w-full">
+                    <button id="tab-score-4" onclick="renderBestScoreModal(4)" class="flex-1 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all bg-soop text-white shadow-sm">4x4 보드</button>
+                    <button id="tab-score-5" onclick="renderBestScoreModal(5)" class="flex-1 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all bg-sky-100 text-sky-700 hover:bg-sky-200">5x5 보드</button>
+                    <button id="tab-score-6" onclick="renderBestScoreModal(6)" class="flex-1 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all bg-sky-100 text-sky-700 hover:bg-sky-200">6x6 보드</button>
                 </div>
             </div>
             
-            <button onclick="closeBestScoreModal()" class="mt-2 bg-soop hover:bg-sky-500 text-white font-bold py-3 rounded-xl transition-colors shadow-sm">
+            <div class="flex flex-col gap-2 overflow-y-auto hide-scrollbar flex-1 pb-2 pt-1">
+                <div class="text-sm font-black text-sky-900 border-b-2 border-sky-200 pb-1 mb-1 sticky top-0 bg-white z-10 transition-colors">🎮 일반 모드</div>
+                <div class="flex justify-between bg-sky-50 p-2.5 sm:p-3 rounded-xl border border-sky-200 transition-colors">
+                    <span class="font-bold text-sky-800 text-sm">일반 점수</span>
+                    <span id="score-val-normal" class="font-black text-soop text-lg">0</span>
+                </div>
+
+                <div class="text-sm font-black text-rose-900 border-b-2 border-rose-200 pb-1 mb-1 mt-3 sticky top-0 bg-white z-10 transition-colors">⏳ 서바이벌 모드</div>
+                <div class="flex justify-between bg-green-50 p-2.5 sm:p-3 rounded-xl border border-green-200 transition-colors">
+                    <span class="font-bold text-green-800 text-sm">🌱 초보</span>
+                    <span id="score-val-beginner" class="font-black text-green-600 text-lg">0</span>
+                </div>
+                <div class="flex justify-between bg-blue-50 p-2.5 sm:p-3 rounded-xl border border-blue-200 transition-colors">
+                    <span class="font-bold text-blue-800 text-sm">💧 중수</span>
+                    <span id="score-val-intermediate" class="font-black text-blue-600 text-lg">0</span>
+                </div>
+                <div class="flex justify-between bg-purple-50 p-2.5 sm:p-3 rounded-xl border border-purple-200 transition-colors">
+                    <span class="font-bold text-purple-800 text-sm">🔥 고수</span>
+                    <span id="score-val-advanced" class="font-black text-purple-600 text-lg">0</span>
+                </div>
+                <div class="flex justify-between bg-rose-50 p-2.5 sm:p-3 rounded-xl border border-rose-200 transition-colors">
+                    <span class="font-bold text-rose-800 text-sm">⚡ 전문가</span>
+                    <span id="score-val-expert" class="font-black text-rose-600 text-lg">0</span>
+                </div>
+                <div class="flex justify-between bg-slate-100 p-2.5 sm:p-3 rounded-xl border border-slate-300 transition-colors">
+                    <span class="font-bold text-slate-800 text-sm">👑 마스터</span>
+                    <span id="score-val-master" class="font-black text-slate-600 text-lg">0</span>
+                </div>
+            </div>
+            
+            <button onclick="closeBestScoreModal()" class="shrink-0 mt-1 bg-soop hover:bg-sky-500 text-white font-bold py-3 rounded-xl transition-colors shadow-sm w-full">
                 닫기
             </button>
         </div>
@@ -268,9 +310,9 @@
                 </div>
 
                 <div class="text-center mb-8 mt-2">
-                    <h1 class="soop-text text-6xl md:text-7xl mb-2 drop-shadow-sm">SOOP</h1>
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-sky-950 transition-colors">2048</h2>
-                    <p class="mt-4 text-sky-600 font-medium text-sm break-keep transition-colors">나만의 버츄얼 스트리머 라인업으로 즐기세요!</p>
+                    <h1 class="soop-text text-5xl sm:text-6xl md:text-7xl mb-2 drop-shadow-sm">SOOP</h1>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-sky-950 transition-colors">2048</h2>
+                    <p class="mt-4 text-sky-600 font-medium text-xs sm:text-sm break-keep transition-colors">나만의 버츄얼 스트리머 라인업으로 즐기세요!</p>
                 </div>
                 
                 <div class="w-full max-w-[240px] mb-2 flex flex-col gap-3">
@@ -281,7 +323,7 @@
                     
                     <!-- 튜토리얼 -->
                     <button onclick="startTutorial()" class="bg-indigo-500 text-white py-3 rounded-2xl font-bold text-lg shadow-[0_4px_0_#4338ca] active:translate-y-1 active:shadow-none transition-all w-full flex items-center justify-center gap-2 hover:bg-indigo-600">
-                        <span>📖</span> 튜토리얼 (방법)
+                        <span>📖</span> 튜토리얼
                     </button>
                     
                     <!-- 설정 -->
@@ -301,8 +343,7 @@
                         <span>📢</span> 제작자 공지사항
                     </h3>
                     <ul class="list-disc pl-5 space-y-1.5 text-xs text-sky-700 font-medium leading-relaxed transition-colors">
-                        <li>구글 로그인 시 기기간 점수가 동기화됩니다.</li>
-                        <li>다크모드에서 일부 ui의 가시성이 좋지않을수 있습니다. (패치예정)</li>
+                        <li><strong>구글 로그인 연동!</strong>: PC와 모바일 기록을 공유하세요!</li>
                         <li>스트리머 그룹/크루 정보와 아바타 이미지는 2026년 1월 말 기준이며 지속적으로 최신화 해나갈 예정입니다.</li>
                         <li>정보 최신화가 필요한 부분은 아래 이메일로 제보 부탁드립니다. </li>
                         <li>(ex. oo님 아바타 바뀌었어요! oo크루에 oo님이 없어요! oo님 더이상 oo크루 소속이 아니에요! 등) </li>
@@ -321,16 +362,41 @@
             <div class="w-full max-w-md mx-auto flex flex-col gap-4 px-4">
                 <button onclick="selectMode('normal')" class="bg-white border-2 border-soop p-5 rounded-2xl shadow-sm hover:bg-sky-50 transition-colors text-left flex flex-col gap-1.5 active:scale-[0.98]">
                     <div class="font-black text-2xl text-soop flex items-center gap-2"><span>🎮</span> 일반 모드</div>
-                    <div class="text-sm font-medium text-sky-700">시간 제한 없이 나만의 스트리머 라인업을 여유롭게 구성해 2048을 즐겨보세요.</div>
+                    <div class="text-sm font-medium text-sky-700">나만의 스트리머 라인업을 여유롭게 구성해 2048을 즐겨보세요.</div>
                 </button>
                 <button onclick="selectMode('survival')" class="bg-white border-2 border-rose-400 p-5 rounded-2xl shadow-sm hover:bg-rose-50 transition-colors text-left flex flex-col gap-1.5 active:scale-[0.98]">
                     <div class="font-black text-2xl text-rose-500 flex items-center gap-2"><span>⏳</span> 서바이벌 모드</div>
-                    <div class="text-sm font-medium text-rose-700">시간 제한의 압박! 특정 단계 이상 진화 시 추가 시간이 주어집니다. 난이도를 선택해 도전하세요!</div>
+                    <div class="text-sm font-medium text-rose-700">시간 제한이 있으며, 특정 단계 이상 진화 시 시간이 증가합니다.</div>
                 </button>
             </div>
             
             <div class="mt-8 flex justify-center">
                 <button onclick="goToScreen('home')" class="bg-sky-200 text-sky-800 px-8 py-3 rounded-xl font-bold hover:bg-sky-300 transition-colors">이전으로</button>
+            </div>
+        </div>
+
+        <!-- 1.3 일반 보드 크기 선택 화면 -->
+        <div id="screen-board_size_select" class="screen pb-32 pt-6">
+            <h2 class="text-2xl font-bold text-center mb-6 text-sky-950 shrink-0 transition-colors">플레이 판 크기 선택</h2>
+            <p class="text-center text-sm font-medium text-sky-600 mb-6 px-4">판 크기에 따라 진화해야 할 스트리머 수가 달라집니다!</p>
+            
+            <div class="w-full max-w-md mx-auto flex flex-col gap-3 px-4">
+                <button onclick="setBoardSize(4)" class="bg-white border-2 border-sky-400 p-4 rounded-2xl shadow-sm hover:bg-sky-50 transition-colors text-left flex flex-col gap-1 active:scale-[0.98]">
+                    <div class="font-bold text-xl text-sky-800">⬜ 4x4 보드</div>
+                    <div class="text-sm font-medium text-sky-600">스트리머 <strong class="text-soop">12명</strong> 선택 (최대 12단계 진화)</div>
+                </button>
+                <button onclick="setBoardSize(5)" class="bg-white border-2 border-blue-400 p-4 rounded-2xl shadow-sm hover:bg-blue-50 transition-colors text-left flex flex-col gap-1 active:scale-[0.98]">
+                    <div class="font-bold text-xl text-blue-800">🟦 5x5 보드</div>
+                    <div class="text-sm font-medium text-blue-600">스트리머 <strong class="text-blue-500">13명</strong> 선택 (최대 13단계 진화)</div>
+                </button>
+                <button onclick="setBoardSize(6)" class="bg-white border-2 border-indigo-400 p-4 rounded-2xl shadow-sm hover:bg-indigo-50 transition-colors text-left flex flex-col gap-1 active:scale-[0.98]">
+                    <div class="font-bold text-xl text-indigo-800">🟪 6x6 보드</div>
+                    <div class="text-sm font-medium text-indigo-600">스트리머 <strong class="text-indigo-500">14명</strong> 선택 (최대 14단계 진화)</div>
+                </button>
+            </div>
+            
+            <div class="mt-8 flex justify-center">
+                <button onclick="goBackFromBoardSize()" class="bg-sky-200 text-sky-800 px-8 py-3 rounded-xl font-bold hover:bg-sky-300 transition-colors">이전으로</button>
             </div>
         </div>
 
@@ -362,70 +428,70 @@
             </div>
             
             <div class="mt-8 flex justify-center">
-                <button onclick="goToScreen('modeselect')" class="bg-sky-200 text-sky-800 px-8 py-3 rounded-xl font-bold hover:bg-sky-300 transition-colors">이전으로</button>
+                <button onclick="goBackFromDifficulty()" class="bg-sky-200 text-sky-800 px-8 py-3 rounded-xl font-bold hover:bg-sky-300 transition-colors">이전으로</button>
             </div>
         </div>
 
-        <!-- 2. 멤버 선택 화면 (12명 선택) -->
+        <!-- 2. 멤버 선택 화면 (N명 선택) -->
         <div id="screen-member_select" class="screen pb-32 pt-2 relative">
             <!-- 상단 헤더 -->
-            <div class="flex justify-between items-center mb-4 shrink-0 max-w-5xl mx-auto w-full px-2">
-                <button onclick="goBackFromMemberSelect()" class="bg-sky-200 hover:bg-sky-300 text-sky-800 px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
+            <div class="flex justify-between items-center mb-4 shrink-0 max-w-5xl mx-auto w-full px-3 sm:px-4">
+                <button onclick="goBackFromMemberSelect()" class="bg-sky-200 hover:bg-sky-300 text-sky-800 px-3 py-1.5 rounded-lg text-[11px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
                     <span>🔙</span> 이전
                 </button>
-                <h2 class="text-lg sm:text-xl font-extrabold text-sky-950 transition-colors text-center">1. 스트리머 선택 (12명)</h2>
-                <div class="flex gap-2">
-                    <button onclick="clearSelectedMembers()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2.5 py-1.5 rounded-lg text-[11px] sm:text-sm font-bold shadow-sm transition-colors shrink-0">❌ 전체 취소</button>
-                    <button onclick="randomSelectMembers()" class="bg-blue-500 hover:bg-blue-600 text-white px-2.5 py-1.5 rounded-lg text-[11px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
+                <h2 id="member-select-header" class="text-base sm:text-xl font-extrabold text-sky-950 transition-colors text-center px-2">1. 스트리머 선택</h2>
+                <div class="flex gap-1.5 sm:gap-2">
+                    <button onclick="clearSelectedMembers()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors shrink-0">❌ 취소</button>
+                    <button onclick="randomSelectMembers()" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
                         <span>🎲</span> 무작위
                     </button>
                 </div>
             </div>
 
             <!-- 필터 및 검색 컨트롤 -->
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-sky-100 mb-4 max-w-2xl mx-auto w-full transition-colors flex flex-col gap-3">
+            <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-sm border border-sky-100 mb-4 max-w-3xl mx-auto w-full transition-colors flex flex-col gap-2.5 sm:gap-3">
                 <div class="flex flex-col sm:flex-row gap-2">
-                    <select id="crew-filter-select" onchange="setCrewFilter(this.value)" class="flex-1 p-2.5 border-2 border-sky-200 rounded-xl bg-sky-50 outline-none focus:border-soop text-sm font-bold text-sky-900 transition-colors">
-                        <option value="all">전체 스트리머 보기</option>
+                    <select id="crew-filter-select" onchange="setCrewFilter(this.value)" class="flex-1 p-2 sm:p-2.5 border-2 border-sky-200 rounded-xl bg-sky-50 outline-none focus:border-soop text-xs sm:text-sm font-bold text-sky-900 transition-colors">
+                        <option value="all">그룹/크루 선택</option>
                         <!-- 스크립트에서 추가됨 -->
                     </select>
-                    <button id="btn-select-all-crew" onclick="selectAllInCrew()" class="hidden bg-sky-500 hover:bg-sky-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm shrink-0 transition-colors">
+                    <button id="btn-select-all-crew" onclick="selectAllInCrew()" class="hidden bg-sky-500 hover:bg-sky-600 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-sm shrink-0 transition-colors">
                         해당 그룹 일괄선택
                     </button>
                 </div>
                 
-                <input type="text" id="member-search" placeholder="스트리머 이름 검색" class="w-full p-2.5 border-2 border-sky-200 rounded-xl focus:border-soop focus:outline-none transition-colors font-medium bg-sky-50 text-sm">
+                <input type="text" id="member-search" placeholder="스트리머 이름 검색" class="w-full p-2 sm:p-2.5 border-2 border-sky-200 rounded-xl focus:border-soop focus:outline-none transition-colors font-medium bg-sky-50 text-xs sm:text-sm">
                 
                 <!-- 초성 네비게이션 -->
                 <div class="relative flex items-center w-full group mt-1">
-                    <div class="flex gap-2 overflow-x-auto hide-scrollbar py-1 w-full scroll-smooth cursor-grab px-1" id="member-chosung-nav"></div>
+                    <div class="flex gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar py-1 w-full scroll-smooth cursor-grab px-1" id="member-chosung-nav"></div>
                 </div>
             </div>
 
-            <!-- 멤버 리스트 그리드 (페이지네이션 적용 - 12명 2줄 6열 또는 3줄 4열) -->
-            <div class="w-full max-w-3xl mx-auto px-2">
-                <div id="member-list-grid" class="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-4">
+            <!-- 멤버 리스트 그리드 (반응형: 4칸 -> 5칸 -> 6칸 -> 8칸) -->
+            <div class="w-full max-w-4xl mx-auto px-2 sm:px-4">
+                <div id="member-list-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3 lg:gap-4 mb-4">
                     <!-- 멤버 동적 생성 -->
                 </div>
             </div>
 
             <!-- 페이지네이션 컨트롤 -->
-            <div id="pagination-controls" class="flex justify-center items-center gap-4 mb-32">
+            <div id="pagination-controls" class="flex justify-center items-center gap-3 sm:gap-4 mb-32">
                 <!-- 동적 생성 -->
             </div>
 
             <!-- 하단 선택 패널 -->
-            <div class="fixed bottom-0 left-0 w-full bg-white border-t border-sky-200 p-3 z-10 shadow-[0_-4px_10px_rgba(0,173,239,0.05)] transition-colors">
-                <div class="max-w-5xl mx-auto flex flex-col gap-3">
-                    <div class="flex justify-between items-end px-1">
-                        <span class="text-xs font-bold text-sky-600">선택된 스트리머 <span id="selected-count-display" class="text-soop">0/12</span> 명</span>
-                        <span class="text-xs font-bold text-soop">클릭하여 취소</span>
+            <div class="fixed bottom-0 left-0 w-full bg-white border-t border-sky-200 p-2.5 sm:p-3 z-10 shadow-[0_-4px_10px_rgba(0,173,239,0.05)] transition-colors">
+                <div class="max-w-5xl mx-auto flex flex-col gap-2.5 sm:gap-3">
+                    <div class="flex justify-between items-end px-2">
+                        <span class="text-[11px] sm:text-xs font-bold text-sky-600">선택된 스트리머 <span id="selected-count-display" class="text-soop">0/12</span> 명</span>
+                        <span class="text-[11px] sm:text-xs font-bold text-soop">클릭하여 취소</span>
                     </div>
-                    <!-- 선택된 멤버 목록 미리보기 -->
+                    <!-- 선택된 멤버 목록 미리보기 (이전 크기로 복구) -->
                     <div id="selected-members-preview" class="flex gap-1.5 overflow-x-auto hide-scrollbar pb-1 px-1 min-h-[48px]"></div>
                     
-                    <button id="btn-goto-order" onclick="goToEvolutionOrder()" disabled class="w-full py-3.5 rounded-xl font-bold text-lg transition-all bg-sky-200 text-sky-500 cursor-not-allowed">
-                        스트리머 선택 중... (0/12)
+                    <button id="btn-goto-order" onclick="goToEvolutionOrder()" disabled class="w-full py-3 sm:py-3.5 rounded-xl font-bold text-base sm:text-lg transition-all bg-sky-200 text-sky-500 cursor-not-allowed">
+                        스트리머 선택 중...
                     </button>
                 </div>
             </div>
@@ -433,112 +499,112 @@
             <!-- 튜토리얼 툴팁 (멤버 선택 화면) -->
             <div id="tutorial-member-tooltip" class="hidden fixed top-1/4 left-1/2 transform -translate-x-1/2 z-50 bg-white/95 text-sky-900 font-extrabold py-4 px-6 rounded-3xl shadow-2xl border-2 border-soop flex-col items-center gap-3 text-center min-w-[280px]">
                 <div class="text-3xl">💡</div>
-                <div id="tutorial-member-text" class="text-sm md:text-base leading-snug break-keep">게임에 등장할 스트리머 12명을<br>먼저 골라보세요!</div>
+                <div id="tutorial-member-text" class="text-sm md:text-base leading-snug break-keep">게임에 등장할 스트리머들을<br>먼저 골라보세요!</div>
                 <button onclick="closeTutorialMemberTooltip()" class="mt-1 bg-soop hover:bg-sky-500 text-white px-6 py-2 rounded-full text-sm shadow-md transition-colors font-bold">확인</button>
             </div>
         </div>
 
         <!-- 3. 진화 순서 배치 화면 -->
         <div id="screen-evolution_order" class="screen pb-32 pt-2 relative">
-            <div class="flex justify-between items-center mb-4 shrink-0 max-w-5xl mx-auto w-full px-2">
-                <button onclick="goToScreen('member_select')" class="bg-sky-200 hover:bg-sky-300 text-sky-800 px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
+            <div class="flex justify-between items-center mb-4 shrink-0 max-w-5xl mx-auto w-full px-3 sm:px-4">
+                <button onclick="goToScreen('member_select')" class="bg-sky-200 hover:bg-sky-300 text-sky-800 px-3 py-1.5 rounded-lg text-[11px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
                     <span>🔙</span> 멤버 다시 선택
                 </button>
-                <h2 class="text-lg sm:text-xl font-extrabold text-sky-950 transition-colors text-center">2. 진화 순서 정하기</h2>
-                <div class="flex gap-2">
-                    <button onclick="clearEvolutionOrder()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2.5 py-1.5 rounded-lg text-[11px] sm:text-sm font-bold shadow-sm transition-colors shrink-0">❌ 전체 취소</button>
-                    <button onclick="randomEvoOrder()" class="bg-blue-500 hover:bg-blue-600 text-white px-2.5 py-1.5 rounded-lg text-[11px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
+                <h2 class="text-lg sm:text-xl font-extrabold text-sky-950 transition-colors text-center px-2">2. 진화 순서 정하기</h2>
+                <div class="flex gap-1.5 sm:gap-2">
+                    <button onclick="clearEvolutionOrder()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors shrink-0">❌ 취소</button>
+                    <button onclick="randomEvoOrder()" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1.5 sm:px-2.5 rounded-lg text-[10px] sm:text-sm font-bold shadow-sm transition-colors flex items-center gap-1">
                         <span>🎲</span> 무작위 배치
                     </button>
                 </div>
             </div>
 
-            <!-- 배치 대기열 (6개씩 2줄) -->
-            <div class="w-full max-w-3xl mx-auto bg-white p-4 rounded-2xl shadow-sm border border-sky-100 mb-6 transition-colors">
-                <h3 class="text-center font-bold text-sky-800 mb-3 text-sm">아래 스트리머를 클릭하여 순서를 정해주세요.</h3>
-                <div id="evo-available-grid" class="grid grid-cols-6 gap-1 sm:gap-2 justify-items-center w-full">
+            <!-- 배치 대기열 (반응형 그리드) -->
+            <div class="w-full max-w-4xl mx-auto bg-white p-3 sm:p-5 rounded-2xl shadow-sm border border-sky-100 mb-4 sm:mb-6 transition-colors">
+                <h3 class="text-center font-bold text-sky-800 mb-3 sm:mb-4 text-xs sm:text-sm">아래 스트리머를 클릭하여 순서를 정해주세요.</h3>
+                <div id="evo-available-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-4 justify-items-center w-full">
                     <!-- 스크립트에서 추가 -->
                 </div>
             </div>
 
-            <!-- 진화 슬롯 (1~12) (6개씩 2줄) -->
-            <div class="w-full max-w-3xl mx-auto px-2 pb-8">
-                <h3 class="text-center font-bold text-sky-950 mb-3 text-sm">진화 순서 (클릭하여 취소)</h3>
-                <div id="evo-slots-grid" class="grid grid-cols-6 gap-1 sm:gap-3 justify-items-center w-full">
-                    <!-- 스크립트에서 12개 슬롯 생성 -->
+            <!-- 진화 슬롯 (반응형 그리드) -->
+            <div class="w-full max-w-4xl mx-auto px-2 pb-8">
+                <h3 class="text-center font-bold text-sky-950 mb-3 sm:mb-4 text-xs sm:text-sm">진화 순서 (클릭하여 취소)</h3>
+                <div id="evo-slots-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-4 justify-items-center w-full">
+                    <!-- 스크립트에서 동적 슬롯 생성 -->
                 </div>
             </div>
 
             <!-- 하단 시작 버튼 -->
-            <div class="fixed bottom-0 left-0 w-full bg-white border-t border-sky-200 p-4 z-10 shadow-[0_-4px_10px_rgba(0,173,239,0.05)] transition-colors flex justify-center">
-                <button id="btn-start-game" onclick="startGame()" disabled class="w-full max-w-5xl py-4 rounded-xl font-bold text-xl transition-all bg-sky-200 text-sky-500 cursor-not-allowed">
-                    순서 배치 중... (0/12)
+            <div class="fixed bottom-0 left-0 w-full bg-white border-t border-sky-200 p-3 sm:p-4 z-10 shadow-[0_-4px_10px_rgba(0,173,239,0.05)] transition-colors flex justify-center">
+                <button id="btn-start-game" onclick="startGame()" disabled class="w-full max-w-5xl py-3 sm:py-4 rounded-xl font-bold text-lg sm:text-xl transition-all bg-sky-200 text-sky-500 cursor-not-allowed">
+                    순서 배치 중...
                 </button>
             </div>
             
             <div id="tutorial-order-tooltip" class="hidden fixed top-1/4 left-1/2 transform -translate-x-1/2 z-50 bg-white/95 text-sky-900 font-extrabold py-4 px-6 rounded-3xl shadow-2xl border-2 border-soop flex-col items-center gap-3 text-center min-w-[280px]">
                 <div class="text-3xl">💡</div>
-                <div class="text-sm md:text-base leading-snug break-keep">1단계부터 12단계까지<br>진화할 순서를 직접 배치하세요!</div>
+                <div class="text-sm md:text-base leading-snug break-keep">1단계부터 최고단계까지<br>진화할 순서를 직접 배치하세요!</div>
                 <button onclick="closeTutorialOrderTooltip()" class="mt-1 bg-soop hover:bg-sky-500 text-white px-6 py-2 rounded-full text-sm shadow-md transition-colors font-bold">확인</button>
             </div>
         </div>
 
         <!-- 4. 인게임 화면 -->
         <div id="screen-game" class="screen w-full pb-8 pt-2 relative">
-            <div class="w-full max-w-5xl mx-auto flex justify-between items-end mb-6">
-                <div>
-                    <h1 class="soop-text text-3xl mb-1">SOOP 2048</h1>
-                    <p id="game-mode-subtitle" class="text-sky-600 font-medium text-xs transition-colors">나만의 스트리머 라인업 합치기!</p>
+            <div class="w-full max-w-5xl mx-auto flex justify-between items-end mb-4 sm:mb-6 px-2 sm:px-0">
+                <div class="w-1/2">
+                    <h1 class="soop-text text-2xl sm:text-3xl mb-0.5 sm:mb-1">SOOP 2048</h1>
+                    <p id="game-mode-subtitle" class="text-sky-600 font-medium text-[10px] sm:text-xs transition-colors truncate">나만의 스트리머 라인업 합치기!</p>
                 </div>
-                <div class="flex gap-2">
-                    <div class="bg-white border border-sky-200 px-3 py-1.5 rounded-xl text-center shadow-sm min-w-[65px] transition-colors">
-                        <div class="text-sky-500 text-[10px] font-bold uppercase transition-colors">점수</div>
-                        <div id="game-score" class="text-sky-950 text-lg font-black leading-none transition-colors">0</div>
+                <div class="flex gap-1.5 sm:gap-2">
+                    <div class="bg-white border border-sky-200 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-center shadow-sm min-w-[55px] sm:min-w-[65px] transition-colors">
+                        <div class="text-sky-500 text-[9px] sm:text-[10px] font-bold uppercase transition-colors">점수</div>
+                        <div id="game-score" class="text-sky-950 text-base sm:text-lg font-black leading-none transition-colors">0</div>
                     </div>
-                    <div class="bg-soop px-3 py-1.5 rounded-xl text-center shadow-md min-w-[65px] cursor-pointer hover:bg-sky-500 transition-colors" onclick="openBestScoreModal()">
-                        <div class="text-sky-100 text-[10px] font-bold uppercase">최고점수</div>
-                        <div id="game-best-score" class="text-white text-lg font-black leading-none">0</div>
+                    <div class="bg-soop px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-center shadow-md min-w-[55px] sm:min-w-[65px] cursor-pointer hover:bg-sky-500 transition-colors" onclick="openBestScoreModal()">
+                        <div class="text-sky-100 text-[9px] sm:text-[10px] font-bold uppercase">최고점수</div>
+                        <div id="game-best-score" class="text-white text-base sm:text-lg font-black leading-none">0</div>
                     </div>
                 </div>
             </div>
 
             <!-- 서바이벌 모드 타이머 바 -->
-            <div id="survival-timer-wrapper" class="hidden w-full mx-auto shrink-0 mb-4 transition-all" style="max-width: 450px;">
-                <div class="flex justify-between items-end mb-1 px-2">
-                    <span id="survival-time-desc" class="text-[11px] sm:text-xs font-black text-rose-500">남은 시간</span>
-                    <span id="survival-time-text" class="text-2xl font-black text-rose-600 font-mono tracking-tighter">15.0s</span>
+            <div id="survival-timer-wrapper" class="hidden w-full mx-auto shrink-0 mb-4 transition-all px-2 sm:px-0" style="max-width: 450px;">
+                <div class="flex justify-between items-end mb-1 px-1 sm:px-2">
+                    <span id="survival-time-desc" class="text-[10px] sm:text-xs font-black text-rose-500">남은 시간</span>
+                    <span id="survival-time-text" class="text-xl sm:text-2xl font-black text-rose-600 font-mono tracking-tighter">15.0s</span>
                 </div>
-                <div class="w-full h-3.5 bg-rose-100/80 rounded-full overflow-hidden shadow-inner border border-rose-200/50">
+                <div class="w-full h-3 sm:h-3.5 bg-rose-100/80 rounded-full overflow-hidden shadow-inner border border-rose-200/50">
                     <div id="survival-time-bar" class="h-full bg-rose-500 transition-all duration-100 ease-linear shadow-md" style="width: 100%;"></div>
                 </div>
             </div>
 
-            <div class="w-full max-w-5xl flex justify-end gap-2 mb-4 mx-auto shrink-0 relative">
+            <div class="w-full max-w-5xl flex justify-end gap-1.5 sm:gap-2 mb-3 sm:mb-4 mx-auto shrink-0 relative px-2 sm:px-0">
                 <!-- 튜토리얼 시 크기 조절 유도 툴팁 -->
-                <div id="tutorial-size-tooltip" class="hidden absolute -top-12 right-0 z-50 bg-white/95 text-sky-900 font-extrabold py-2 px-4 rounded-full shadow-xl flex items-center gap-2 text-center whitespace-nowrap border-2 border-soop animate-bounce">
-                    <span class="text-xs sm:text-sm">화면이 잘린다면 크기를 조절하세요! 👇</span>
+                <div id="tutorial-size-tooltip" class="hidden absolute -top-10 sm:-top-12 right-2 sm:right-0 z-50 bg-white/95 text-sky-900 font-extrabold py-1.5 px-3 sm:py-2 sm:px-4 rounded-full shadow-xl flex items-center gap-1 sm:gap-2 text-center whitespace-nowrap border-2 border-soop animate-bounce">
+                    <span class="text-[10px] sm:text-sm">화면이 잘린다면 크기를 조절하세요! 👇</span>
                 </div>
 
-                <button onclick="openBoardScaleSettings(true)" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-800 text-[11px] sm:text-xs font-bold py-2 px-3 sm:px-4 rounded-full shadow-sm transition-colors flex items-center gap-1 border border-indigo-200">
-                    <span>🔍</span> 크기 설정
+                <button onclick="openBoardScaleSettings(true)" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-800 text-[10px] sm:text-xs font-bold py-1.5 px-2.5 sm:py-2 sm:px-4 rounded-full shadow-sm transition-colors flex items-center gap-1 border border-indigo-200 active:scale-95">
+                    <span>🔍</span><span class="hidden sm:inline"> 크기 설정</span><span class="sm:hidden"> 크기</span>
                 </button>
-                <button onclick="toggleGuidePosition()" class="bg-sky-200 hover:bg-sky-300 text-sky-800 text-[11px] sm:text-xs font-bold py-2 px-3 sm:px-4 rounded-full shadow-sm transition-colors border border-sky-300">
+                <button onclick="toggleGuidePosition()" class="bg-sky-200 hover:bg-sky-300 text-sky-800 text-[10px] sm:text-xs font-bold py-1.5 px-2.5 sm:py-2 sm:px-4 rounded-full shadow-sm transition-colors border border-sky-300 active:scale-95">
                     ↔ 가이드 변경
                 </button>
-                <button id="btn-restart-game" onclick="handleRestart()" class="bg-sky-700 hover:bg-sky-800 text-white text-[11px] sm:text-xs font-bold py-2 px-3 sm:px-4 rounded-full shadow transition-colors border border-sky-800">
+                <button id="btn-restart-game" onclick="handleRestart()" class="bg-sky-700 hover:bg-sky-800 text-white text-[10px] sm:text-xs font-bold py-1.5 px-2.5 sm:py-2 sm:px-4 rounded-full shadow transition-colors border border-sky-800 active:scale-95">
                     🔄 다시 시작
                 </button>
             </div>
 
-            <div id="game-main-layout" class="flex flex-col items-center w-full max-w-5xl mx-auto gap-6">
+            <div id="game-main-layout" class="flex flex-col items-center w-full max-w-5xl mx-auto gap-4 sm:gap-6 px-2 sm:px-0">
                 <!-- 게임 보드 -->
                 <div id="game-board-wrapper" class="w-full shrink-0 transition-all duration-300 ease-in-out" style="max-width: 450px;">
-                    <div id="game-board-container" class="relative w-full aspect-square bg-slate-800 rounded-2xl p-2 shadow-2xl touch-none border-4 border-slate-950 overflow-hidden transition-colors">
+                    <div id="game-board-container" class="relative w-full aspect-square bg-slate-800 rounded-xl sm:rounded-2xl p-1.5 sm:p-2 shadow-2xl touch-none border-4 border-slate-950 overflow-hidden transition-colors">
                         
-                        <!-- 툴팁: 튜토리얼에서만 표시 (애니메이션 제거) -->
-                        <div id="tutorial-tooltip" class="hidden absolute top-4 left-1/2 transform -translate-x-1/2 z-40 bg-white/95 text-sky-900 font-extrabold py-2 px-5 rounded-full shadow-xl flex items-center gap-2 text-center whitespace-nowrap border-2 border-soop">
-                            <span id="tutorial-tooltip-icon" class="text-xl">👉</span>
-                            <span id="tutorial-tooltip-text" class="text-xs sm:text-sm">오른쪽(▶)으로 스와이프!</span>
+                        <!-- 툴팁: 튜토리얼에서만 표시 -->
+                        <div id="tutorial-tooltip" class="hidden absolute top-4 left-1/2 transform -translate-x-1/2 z-40 bg-white/95 text-sky-900 font-extrabold py-1.5 px-4 sm:py-2 sm:px-5 rounded-full shadow-xl flex items-center gap-1.5 sm:gap-2 text-center whitespace-nowrap border-2 border-soop">
+                            <span id="tutorial-tooltip-icon" class="text-lg sm:text-xl">👉</span>
+                            <span id="tutorial-tooltip-text" class="text-[11px] sm:text-sm">오른쪽(▶)으로 스와이프!</span>
                         </div>
 
                         <div class="relative w-full h-full">
@@ -547,46 +613,46 @@
                         </div>
 
                         <!-- 오버레이: 튜토리얼 완료 -->
-                        <div id="overlay-tutorial-won" class="hidden absolute inset-0 bg-sky-950/90 backdrop-blur-md z-50 flex-col items-center justify-center rounded-xl p-5 text-center">
-                            <div class="text-5xl mb-4">🎉</div>
-                            <h2 class="text-2xl font-black text-yellow-300 mb-3">튜토리얼 완료!</h2>
-                            <p class="text-sky-100 mb-6 font-medium text-sm leading-relaxed break-keep">
+                        <div id="overlay-tutorial-won" class="hidden absolute inset-0 bg-sky-950/90 backdrop-blur-md z-50 flex-col items-center justify-center rounded-xl p-4 sm:p-5 text-center">
+                            <div class="text-4xl sm:text-5xl mb-3 sm:mb-4">🎉</div>
+                            <h2 class="text-xl sm:text-2xl font-black text-yellow-300 mb-2 sm:mb-3">튜토리얼 완료!</h2>
+                            <p class="text-sky-100 mb-4 sm:mb-6 font-medium text-[11px] sm:text-sm leading-relaxed break-keep">
                                 같은 스트리머 타일이 만나면<br/>다음 단계로 진화합니다.<br/>
                                 당신이 직접 구성한 라인업으로<br/>최고 점수에 도전해보세요!
                             </p>
-                            <button onclick="endTutorial()" class="bg-soop text-white font-extrabold py-3 px-6 rounded-full shadow-lg hover:bg-sky-400 text-base btn-shadow w-full">메인 메뉴로 가기</button>
+                            <button onclick="endTutorial()" class="bg-soop text-white font-extrabold py-2.5 px-5 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-sky-400 text-sm sm:text-base btn-shadow w-full max-w-[200px]">메인 메뉴로 가기</button>
                         </div>
 
                         <!-- 오버레이: 게임 오버 -->
                         <div id="overlay-gameover" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex-col items-center justify-center rounded-xl">
-                            <h2 class="text-3xl font-extrabold text-white mb-2">방송 종료</h2>
-                            <p id="gameover-desc" class="text-slate-300 mb-6 font-medium text-sm">더 이상 합칠 수 없습니다.</p>
-                            <button onclick="handleRestart()" class="bg-soop text-white font-bold py-3 px-8 rounded-full shadow-lg btn-shadow text-base">다시 도전하기</button>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-1 sm:mb-2">방송 종료</h2>
+                            <p id="gameover-desc" class="text-slate-300 mb-4 sm:mb-6 font-medium text-[11px] sm:text-sm">더 이상 합칠 수 없습니다.</p>
+                            <button onclick="handleRestart()" class="bg-soop text-white font-bold py-2.5 px-6 sm:py-3 sm:px-8 rounded-full shadow-lg btn-shadow text-sm sm:text-base">다시 도전하기</button>
                         </div>
 
                         <!-- 오버레이: 클리어 -->
                         <div id="overlay-gamewon" class="hidden absolute inset-0 bg-slate-900/90 backdrop-blur-md z-50 flex-col items-center justify-center rounded-xl p-4 text-center">
-                            <div class="w-24 h-24 rounded-2xl overflow-hidden mb-4 border-4 border-yellow-300 shadow-xl animate-bounce">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden mb-3 sm:mb-4 border-4 border-yellow-300 shadow-xl animate-bounce">
                                 <img id="gamewon-img" src="" class="w-full h-full object-cover smooth-image">
                             </div>
-                            <h2 id="gamewon-name" class="text-2xl font-black text-yellow-300 mb-1">달성!</h2>
-                            <p class="text-slate-100 mb-6 font-medium text-xs">최종 라인업 완성!</p>
-                            <div class="flex gap-3">
-                                <button onclick="continueGame()" class="bg-slate-700 text-white font-bold py-2 px-5 rounded-full shadow-md hover:bg-slate-600">계속하기</button>
-                                <button onclick="handleRestart()" class="bg-yellow-400 text-slate-950 font-extrabold py-2 px-5 rounded-full shadow-md hover:bg-yellow-300">새 게임</button>
+                            <h2 id="gamewon-name" class="text-xl sm:text-2xl font-black text-yellow-300 mb-1">달성!</h2>
+                            <p class="text-slate-100 mb-4 sm:mb-6 font-medium text-[10px] sm:text-xs">최종 라인업 완성!</p>
+                            <div class="flex gap-2 sm:gap-3">
+                                <button onclick="continueGame()" class="bg-slate-700 text-white font-bold py-1.5 px-4 sm:py-2 sm:px-5 rounded-full shadow-md hover:bg-slate-600 text-xs sm:text-sm">계속하기</button>
+                                <button onclick="handleRestart()" class="bg-yellow-400 text-slate-950 font-extrabold py-1.5 px-4 sm:py-2 sm:px-5 rounded-full shadow-md hover:bg-yellow-300 text-xs sm:text-sm">새 게임</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 진화 트리 가이드 -->
-                <div id="guide-wrapper" class="w-full max-w-md bg-white p-4 rounded-2xl shadow-md border-2 border-soop shrink-0 transition-colors">
-                    <h2 class="text-center font-bold text-sky-800 mb-3 text-xs flex items-center justify-center gap-2 transition-colors">
-                        <span class="w-4 h-[1px] bg-sky-300 hidden sm:block transition-colors"></span>
+                <div id="guide-wrapper" class="w-full max-w-md bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border-2 border-soop shrink-0 transition-colors">
+                    <h2 class="text-center font-bold text-sky-800 mb-2 sm:mb-3 text-[11px] sm:text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-colors">
+                        <span class="w-3 h-[1px] sm:w-4 bg-sky-300 hidden sm:block transition-colors"></span>
                         <span id="guide-title-text" class="break-keep">진화 순서 가이드</span>
-                        <span class="w-4 h-[1px] bg-sky-300 hidden sm:block transition-colors"></span>
+                        <span class="w-3 h-[1px] sm:w-4 bg-sky-300 hidden sm:block transition-colors"></span>
                     </h2>
-                    <div id="evolution-guide" class="grid grid-cols-6 grid-rows-2 gap-x-1 gap-y-3 justify-items-center w-full"></div>
+                    <div id="evolution-guide" class="grid grid-cols-5 min-[400px]:grid-cols-6 sm:grid-cols-7 gap-x-1 sm:gap-x-2 gap-y-2 sm:gap-y-3 justify-items-center w-full"></div>
                 </div>
             </div>
 
@@ -747,16 +813,31 @@
             }
         };
 
-        // 최고 점수 모달
+        // 최고 점수 모달 및 탭 렌더링
+        window.renderBestScoreModal = function(size) {
+            window.playSound('click');
+            window.state.currentScoreTab = size;
+            
+            [4, 5, 6].forEach(s => {
+                const btn = document.getElementById(`tab-score-${s}`);
+                if(s === size) {
+                    btn.className = "flex-1 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all bg-soop text-white shadow-sm";
+                } else {
+                    btn.className = "flex-1 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all bg-sky-100 text-sky-700 hover:bg-sky-200";
+                }
+            });
+
+            document.getElementById('score-val-normal').innerText = window.state.bestScores[`normal_${size}x${size}`] || 0;
+            document.getElementById('score-val-beginner').innerText = window.state.bestScores[`beginner_${size}x${size}`] || 0;
+            document.getElementById('score-val-intermediate').innerText = window.state.bestScores[`intermediate_${size}x${size}`] || 0;
+            document.getElementById('score-val-advanced').innerText = window.state.bestScores[`advanced_${size}x${size}`] || 0;
+            document.getElementById('score-val-expert').innerText = window.state.bestScores[`expert_${size}x${size}`] || 0;
+            document.getElementById('score-val-master').innerText = window.state.bestScores[`master_${size}x${size}`] || 0;
+        };
+
         window.openBestScoreModal = function() {
             window.playSound('click');
-            document.getElementById('score-val-normal').innerText = window.state.bestScores.normal;
-            document.getElementById('score-val-beginner').innerText = window.state.bestScores.beginner;
-            document.getElementById('score-val-intermediate').innerText = window.state.bestScores.intermediate;
-            document.getElementById('score-val-advanced').innerText = window.state.bestScores.advanced;
-            document.getElementById('score-val-expert').innerText = window.state.bestScores.expert;
-            document.getElementById('score-val-master').innerText = window.state.bestScores.master;
-            
+            window.renderBestScoreModal(window.state.gridSize || 4);
             document.getElementById('best-score-modal').classList.remove('hidden');
             document.getElementById('best-score-modal').classList.add('flex');
         };
@@ -783,7 +864,7 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
         let currentUser = null;
-        window.userData = { nickname: "", bestScores: {} }; // bestScores 객체로 변경
+        window.userData = { nickname: "", bestScores: {} };
 
         onAuthStateChanged(auth, async (u) => {
             currentUser = u;
@@ -817,9 +898,10 @@
                     // Firebase에 있는 데이터 병합
                     if (data.bestScores) {
                         window.state.bestScores = { ...window.state.bestScores, ...data.bestScores };
-                    } else if (data.bestScore && data.bestScore > window.state.bestScores.normal) {
-                        // 하위 호환성: 옛날 bestScore 필드
-                        window.state.bestScores.normal = data.bestScore;
+                    } 
+                    // 레거시 대응
+                    if (data.bestScore && data.bestScore > (window.state.bestScores.normal_4x4 || 0)) {
+                        window.state.bestScores.normal_4x4 = data.bestScore;
                     }
                     localStorage.setItem('soop2048BestScores', JSON.stringify(window.state.bestScores));
                 } else {
@@ -958,11 +1040,13 @@
                 { "id": "s11", "name": "곽춘식", "imgs": ["images/streamers/gwakchunsik.webp"] },
                 { "id": "s12", "name": "독고혜지", "imgs": ["images/streamers/doggohyeji_3.png"] },
                 { "id": "s13", "name": "비밀소녀", "imgs": ["images/streamers/bimilsonyeo.webp"] },
-                { "id": "s14", "name": "천양", "imgs": ["images/streamers/cheonyang.webp"] }
+                { "id": "s14", "name": "천양", "imgs": ["images/streamers/cheonyang.webp"] },
+                { "id": "s15", "name": "뢴트게늄", "imgs": ["images/streamers/roent.png"] },
+                { "id": "s16", "name": "캘리칼리", "imgs": ["images/streamers/calli.png"] }
             ],
             achievements: [
                 { "id": "c1", "title": "이세계아이돌", "type": "CREW", "targetList": ["우왁굳", "아이네", "징버거", "릴파", "주르르", "고세구", "비챤"] },
-                { "id": "c5", "title": "고멤클래식", "type": "CREW", "targetList": ["독고혜지", "뢴트게늄", "비밀소녀", "해루석", "곽춘식"] }
+                { "id": "c5", "title": "고멤클래식", "type": "CREW", "targetList": ["독고혜지", "뢴트게늄", "비밀소녀", "해루석", "곽춘식", "캘리칼리"] }
             ]
         };
 
@@ -986,15 +1070,34 @@
         })).sort((a,b) => a.name.localeCompare(b.name));
 
         // === 2. 전역 상태 (State) ===
-        let savedBestScores = { normal: 0, beginner: 0, intermediate: 0, advanced: 0, expert: 0, master: 0 };
+        let savedBestScores = { 
+            normal_4x4: 0, normal_5x5: 0, normal_6x6: 0, 
+            beginner_4x4: 0, beginner_5x5: 0, beginner_6x6: 0, 
+            intermediate_4x4: 0, intermediate_5x5: 0, intermediate_6x6: 0,
+            advanced_4x4: 0, advanced_5x5: 0, advanced_6x6: 0,
+            expert_4x4: 0, expert_5x5: 0, expert_6x6: 0,
+            master_4x4: 0, master_5x5: 0, master_6x6: 0 
+        };
         try {
             // 하위 호환성 로드
             const legacyBest = parseInt(localStorage.getItem('soopCustom2048Best') || '0');
             const storedScores = JSON.parse(localStorage.getItem('soop2048BestScores'));
             if (storedScores) {
+                // 구버전 키들(예: normal, beginner 등)을 4x4로 편입
+                if (storedScores.normal !== undefined) {
+                    storedScores.normal_4x4 = Math.max(storedScores.normal_4x4 || 0, storedScores.normal);
+                    delete storedScores.normal;
+                }
+                const diffs = ['beginner', 'intermediate', 'advanced', 'expert', 'master'];
+                diffs.forEach(d => {
+                    if (storedScores[d] !== undefined) {
+                        storedScores[d + '_4x4'] = Math.max(storedScores[d + '_4x4'] || 0, storedScores[d]);
+                        delete storedScores[d];
+                    }
+                });
                 savedBestScores = { ...savedBestScores, ...storedScores };
             } else if (legacyBest > 0) {
-                savedBestScores.normal = legacyBest;
+                savedBestScores.normal_4x4 = legacyBest;
             }
         } catch(e) {}
 
@@ -1002,17 +1105,19 @@
             screen: 'home',
             gameMode: 'normal', 
             difficulty: 'advanced',
+            currentScoreTab: 4,
+            
             // 멤버 선택 관련 상태 (1단계)
             filterCrewId: 'all',
             filterChosung: '전체',
             searchMemberText: '',
             filteredMembers: [],
-            selectedMembers: [], // 고른 12명의 ID
+            selectedMembers: [], 
             memberCurrentPage: 1,
-            memberItemsPerPage: 12, // 12명으로 고정
+            memberItemsPerPage: 12, 
             
             // 진화 순서 배치 관련 상태 (2단계)
-            evolutionOrder: [], // 0~11 인덱스에 매핑될 ID
+            evolutionOrder: [], 
             
             // 게임 관련 상태
             gridSize: 4,
@@ -1034,8 +1139,15 @@
 
         window.generateId = () => Math.random().toString(36).substr(2, 9);
         
+        window.getRequiredMembersCount = function() {
+            if (window.state.gameMode === 'tutorial') return 12; // 튜토리얼 4x4 고정
+            return window.state.gridSize === 4 ? 12 : (window.state.gridSize === 5 ? 13 : 14);
+        };
+        
         window.getCurrentModeKey = function() {
-            return window.state.gameMode === 'normal' ? 'normal' : window.state.difficulty;
+            const sizeStr = window.state.gridSize + 'x' + window.state.gridSize;
+            if (window.state.gameMode === 'normal') return 'normal_' + sizeStr;
+            return window.state.difficulty + '_' + sizeStr;
         };
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -1107,7 +1219,17 @@
             window.state.screen = screenId;
 
             if (screenId === 'member_select') {
+                const reqCount = window.getRequiredMembersCount();
+                window.state.memberItemsPerPage = reqCount;
                 window.state.memberCurrentPage = 1;
+                
+                // 선택 인원 초과 시 자르기
+                if(window.state.selectedMembers.length > reqCount) {
+                    window.state.selectedMembers = window.state.selectedMembers.slice(0, reqCount);
+                }
+                
+                document.getElementById('member-select-header').innerText = `1. 스트리머 선택 (${reqCount}명)`;
+                
                 window.renderCrewFilterDropdown();
                 window.renderMemberChosungNav();
                 window.updateFilteredMembers();
@@ -1117,14 +1239,18 @@
                 if (window.state.gameMode === 'tutorial' && window.state.tutorialStep === -1) {
                     document.getElementById('tutorial-member-tooltip').classList.remove('hidden');
                     document.getElementById('tutorial-member-tooltip').classList.add('flex');
-                    document.getElementById('tutorial-member-text').innerHTML = "게임에 등장할 스트리머 12명을<br>먼저 골라보세요!";
+                    document.getElementById('tutorial-member-text').innerHTML = `게임에 등장할 스트리머 ${reqCount}명을<br>먼저 골라보세요!`;
                 } else {
                     document.getElementById('tutorial-member-tooltip').classList.add('hidden');
                     document.getElementById('tutorial-member-tooltip').classList.remove('flex');
                 }
             } else if (screenId === 'evolution_order') {
-                // 진화 순서 배열 초기화 및 맞춤 (기존 선택했던 12명과 다르면 리셋)
-                window.state.evolutionOrder = window.state.evolutionOrder.filter(id => window.state.selectedMembers.includes(id));
+                const reqCount = window.getRequiredMembersCount();
+                // 진화 순서 배열 초기화 및 맞춤 (기존 선택했던 인원과 다르면 리셋 및 자르기)
+                window.state.evolutionOrder = window.state.evolutionOrder
+                    .filter(id => window.state.selectedMembers.includes(id))
+                    .slice(0, reqCount);
+                    
                 window.renderEvolutionOrder();
                 
                 if (window.state.gameMode === 'tutorial' && window.state.tutorialStep === -0.5) {
@@ -1137,17 +1263,33 @@
         window.selectMode = function(mode) {
             window.initAudio();
             window.state.gameMode = mode;
-            if (mode === 'survival') {
+            window.goToScreen('board_size_select'); // 모드에 상관없이 항상 보드 크기 선택으로 감
+        };
+        
+        window.setBoardSize = function(size) {
+            window.initAudio();
+            window.state.gridSize = size;
+            if (window.state.gameMode === 'survival') {
                 window.goToScreen('difficulty_select');
             } else {
                 window.goToScreen('member_select');
             }
+        };
+
+        window.goBackFromBoardSize = function() {
+            window.playSound('click');
+            window.goToScreen('modeselect');
         };
         
         window.setDifficulty = function(diff) {
             window.initAudio();
             window.state.difficulty = diff;
             window.goToScreen('member_select');
+        };
+
+        window.goBackFromDifficulty = function() {
+            window.playSound('click');
+            window.goToScreen('board_size_select');
         };
 
         window.goBackFromMemberSelect = function() {
@@ -1157,14 +1299,14 @@
             } else if (window.state.gameMode === 'tutorial') {
                 window.goToScreen('home');
             } else {
-                window.goToScreen('modeselect');
+                window.goToScreen('board_size_select');
             }
         };
 
-        // === 4. 멤버 선택 (1단계: 12명 고르기) 로직 ===
+        // === 4. 멤버 선택 (1단계: N명 고르기) 로직 ===
         window.renderCrewFilterDropdown = function() {
             const select = document.getElementById('crew-filter-select');
-            let html = `<option value="all">전체 스트리머 보기</option>`;
+            let html = `<option value="all">그룹/크루 선택</option>`;
             CREWS_DB.forEach(c => {
                 html += `<option value="${c.id}">${c.name} (${c.members.length}명)</option>`;
             });
@@ -1197,8 +1339,10 @@
             if (!crew) return;
             
             let added = 0;
+            const reqCount = window.getRequiredMembersCount();
+            
             crew.members.forEach(mName => {
-                if (window.state.selectedMembers.length >= 12) return;
+                if (window.state.selectedMembers.length >= reqCount) return;
                 const member = MEMBER_DB.find(m => m.name === mName);
                 if (member && !window.state.selectedMembers.includes(member.id)) {
                     window.state.selectedMembers.push(member.id);
@@ -1211,7 +1355,7 @@
                 window.updateFilteredMembers(); 
                 window.renderSelectedMembersPreview();
             } else {
-                alert("이미 12명이 모두 선택되었거나, 해당 그룹의 멤버가 이미 모두 선택되었습니다.");
+                alert(`이미 ${reqCount}명이 모두 선택되었거나, 해당 그룹의 멤버가 이미 모두 선택되었습니다.`);
             }
         };
 
@@ -1293,9 +1437,9 @@
                 return `
                     <div onclick="toggleMember('${m.id}')" class="relative w-full aspect-square rounded-2xl bg-white shadow-sm border-2 flex flex-col items-center justify-center cursor-pointer transition-transform hover:scale-105 select-none overflow-hidden ${isSel ? 'border-soop ring-2 ring-soop/30' : 'border-sky-100'}">
                         <img src="${m.imgUrl}" onerror="this.src='${window.getAvatarUrl(m.name)}'" class="absolute inset-0 w-full h-full object-cover smooth-image" alt="${m.name}">
-                        ${isSel ? `<div class="absolute top-1 left-1 w-5 h-5 bg-soop text-white font-black text-[10px] rounded-full flex items-center justify-center shadow-md z-20">✓</div>` : ''}
-                        <div class="absolute bottom-0 left-0 w-full bg-sky-950/70 pt-1.5 pb-1 z-10 flex justify-center backdrop-blur-[2px]">
-                            <span class="text-[9px] sm:text-[10px] font-bold w-full text-center px-1 overflow-hidden text-ellipsis whitespace-nowrap text-white">${m.name}</span>
+                        ${isSel ? `<div class="absolute top-1.5 left-1.5 w-6 h-6 sm:w-7 sm:h-7 bg-soop text-white font-black text-[12px] sm:text-[14px] rounded-full flex items-center justify-center shadow-md z-20">✓</div>` : ''}
+                        <div class="absolute bottom-0 left-0 w-full bg-sky-950/70 pt-2 pb-1.5 z-10 flex justify-center backdrop-blur-[2px]">
+                            <span class="text-[11px] sm:text-[12px] font-bold w-full text-center px-1 overflow-hidden text-ellipsis whitespace-nowrap text-white">${m.name}</span>
                         </div>
                     </div>
                 `;
@@ -1332,9 +1476,10 @@
         window.renderSelectedMembersPreview = function() {
             const container = document.getElementById('selected-members-preview');
             let html = '';
+            const reqCount = window.getRequiredMembersCount();
             
-            // 고른 12명을 순서 무관하게 보여줌
-            for(let i=0; i<12; i++) {
+            // 고른 N명을 순서 무관하게 보여줌
+            for(let i=0; i<reqCount; i++) {
                 const mId = window.state.selectedMembers[i];
                 if (mId) {
                     const m = MEMBER_DB.find(x => x.id === mId);
@@ -1354,23 +1499,23 @@
             container.innerHTML = html;
             
             const c = window.state.selectedMembers.length;
-            document.getElementById('selected-count-display').innerText = `${c}/12`;
+            document.getElementById('selected-count-display').innerText = `${c}/${reqCount}`;
             
             const btn = document.getElementById('btn-goto-order');
-            if (c === 12) {
+            if (c === reqCount) {
                 btn.innerHTML = `순서 정하기 (다음 단계) 👉`;
                 btn.className = "w-full py-3.5 rounded-xl font-bold text-lg transition-all bg-soop text-white shadow-[0_4px_0_#007bb5] active:translate-y-1 active:shadow-none animate-pulse";
                 btn.disabled = false;
                 
-                // 튜토리얼 중 12명 선택 완료 시 툴팁 변경
+                // 튜토리얼 중 선택 완료 시 툴팁 변경
                 if(window.state.gameMode === 'tutorial' && window.state.tutorialStep === -1) {
                     document.getElementById('tutorial-member-tooltip').classList.remove('hidden');
                     document.getElementById('tutorial-member-tooltip').classList.add('flex');
-                    document.getElementById('tutorial-member-text').innerHTML = "12명 선택 완료!<br>다음 버튼을 눌러 순서를 정하세요.";
+                    document.getElementById('tutorial-member-text').innerHTML = `${reqCount}명 선택 완료!<br>다음 버튼을 눌러 순서를 정하세요.`;
                     window.state.tutorialStep = -0.8; // 멤버 선택 완료 상태
                 }
             } else {
-                btn.innerHTML = `스트리머 선택 중... (${c}/12)`;
+                btn.innerHTML = `스트리머 선택 중... (${c}/${reqCount})`;
                 btn.className = "w-full py-3.5 rounded-xl font-bold text-lg transition-all bg-sky-200 text-sky-500 cursor-not-allowed";
                 btn.disabled = true;
             }
@@ -1379,15 +1524,17 @@
         window.toggleMember = function(mId) {
             window.initAudio();
             const idx = window.state.selectedMembers.indexOf(mId);
+            const reqCount = window.getRequiredMembersCount();
+
             if (idx > -1) {
                 window.state.selectedMembers.splice(idx, 1);
                 // 튜토리얼 모드에서 취소 시 툴팁 롤백
                 if(window.state.gameMode === 'tutorial' && window.state.tutorialStep === -0.8) {
                      window.state.tutorialStep = -1; 
-                     document.getElementById('tutorial-member-text').innerHTML = "게임에 등장할 스트리머 12명을<br>먼저 골라보세요!";
+                     document.getElementById('tutorial-member-text').innerHTML = `게임에 등장할 스트리머 ${reqCount}명을<br>먼저 골라보세요!`;
                 }
             } else {
-                if (window.state.selectedMembers.length < 12) {
+                if (window.state.selectedMembers.length < reqCount) {
                     window.state.selectedMembers.push(mId);
                 }
             }
@@ -1398,7 +1545,8 @@
         window.randomSelectMembers = function() {
             window.initAudio();
             const currentSelectedCount = window.state.selectedMembers.length;
-            if (currentSelectedCount >= 12) return; 
+            const reqCount = window.getRequiredMembersCount();
+            if (currentSelectedCount >= reqCount) return; 
 
             const unselectedMembers = MEMBER_DB.filter(m => !window.state.selectedMembers.includes(m.id));
             
@@ -1407,7 +1555,7 @@
                 [unselectedMembers[i], unselectedMembers[j]] = [unselectedMembers[j], unselectedMembers[i]];
             }
 
-            const needed = 12 - currentSelectedCount;
+            const needed = reqCount - currentSelectedCount;
             const toAdd = unselectedMembers.slice(0, needed).map(m => m.id);
             
             window.state.selectedMembers = [...window.state.selectedMembers, ...toAdd];
@@ -1416,7 +1564,8 @@
         };
 
         window.goToEvolutionOrder = function() {
-            if (window.state.selectedMembers.length !== 12) return;
+            const reqCount = window.getRequiredMembersCount();
+            if (window.state.selectedMembers.length !== reqCount) return;
             window.playSound('click');
             if (window.state.gameMode === 'tutorial' && window.state.tutorialStep === -0.8) {
                 window.state.tutorialStep = -0.5; // 순서 정하기 튜토리얼 진입
@@ -1433,7 +1582,7 @@
 
         window.randomEvoOrder = function() {
             window.initAudio();
-            // 선택된 12명 중 아직 배치 안 된 멤버 섞기
+            // 선택된 N명 중 아직 배치 안 된 멤버 섞기
             const unplaced = window.state.selectedMembers.filter(id => !window.state.evolutionOrder.includes(id));
             for (let i = unplaced.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1441,7 +1590,8 @@
             }
             
             let pIdx = 0;
-            for(let i=0; i<12; i++) {
+            const reqCount = window.getRequiredMembersCount();
+            for(let i=0; i<reqCount; i++) {
                 if(!window.state.evolutionOrder[i]) {
                     window.state.evolutionOrder[i] = unplaced[pIdx++];
                 }
@@ -1452,6 +1602,7 @@
         window.toggleEvoOrderMember = function(mId) {
             window.initAudio();
             const orderIdx = window.state.evolutionOrder.indexOf(mId);
+            const reqCount = window.getRequiredMembersCount();
             
             if (orderIdx > -1) {
                 // 이미 배치된 경우 빼기
@@ -1461,7 +1612,7 @@
                 window.state.evolutionOrder = compacted;
             } else {
                 // 아직 배치 안 된 경우 넣기
-                if (window.state.evolutionOrder.length < 12) {
+                if (window.state.evolutionOrder.length < reqCount) {
                     window.state.evolutionOrder.push(mId);
                 }
             }
@@ -1471,47 +1622,48 @@
         window.renderEvolutionOrder = function() {
             const availGrid = document.getElementById('evo-available-grid');
             const slotsGrid = document.getElementById('evo-slots-grid');
+            const reqCount = window.getRequiredMembersCount();
             
-            // 위쪽: 배치 가능한 멤버들
+            // 위쪽: 배치 가능한 멤버들 (크기 확대, 반응형 그리드)
             let availHtml = '';
             window.state.selectedMembers.forEach(mId => {
                 const m = MEMBER_DB.find(x => x.id === mId);
                 const isPlaced = window.state.evolutionOrder.includes(mId);
                 
                 availHtml += `
-                    <div onclick="toggleEvoOrderMember('${mId}')" class="w-full max-w-[50px] sm:max-w-[60px] flex flex-col items-center cursor-pointer transition-transform hover:scale-105 active:scale-95 ${isPlaced ? 'opacity-30' : ''}">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden shadow-sm border border-sky-200 bg-sky-50 mb-1 relative">
+                    <div onclick="toggleEvoOrderMember('${mId}')" class="w-full max-w-[60px] sm:max-w-[70px] flex flex-col items-center cursor-pointer transition-transform hover:scale-105 active:scale-95 ${isPlaced ? 'opacity-30' : ''}">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden shadow-sm border border-sky-200 bg-sky-50 mb-1 relative">
                             <img src="${m.imgUrl}" onerror="this.src='${window.getAvatarUrl(m.name)}'" class="w-full h-full object-cover smooth-image">
-                            ${isPlaced ? `<div class="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-lg font-black">✓</div>` : ''}
+                            ${isPlaced ? `<div class="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-xl font-black">✓</div>` : ''}
                         </div>
-                        <span class="text-[9px] sm:text-[10px] font-bold text-sky-800 text-center w-full truncate">${m.name}</span>
+                        <span class="text-[10px] sm:text-xs font-bold text-sky-800 text-center w-full truncate">${m.name}</span>
                     </div>
                 `;
             });
             availGrid.innerHTML = availHtml;
 
-            // 아래쪽: 1~12단계 슬롯
+            // 아래쪽: 1~N단계 슬롯 (반응형 그리드)
             let slotsHtml = '';
-            for(let i=0; i<12; i++) {
+            for(let i=0; i<reqCount; i++) {
                 const mId = window.state.evolutionOrder[i];
                 if (mId) {
                     const m = MEMBER_DB.find(x => x.id === mId);
                     slotsHtml += `
-                        <div onclick="toggleEvoOrderMember('${mId}')" class="flex flex-col items-center w-full cursor-pointer hover:opacity-80 transition-opacity">
-                            <div class="relative w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl overflow-hidden shadow-md border-2 border-soop mb-1 bg-white">
+                        <div onclick="toggleEvoOrderMember('${mId}')" class="flex flex-col items-center w-full max-w-[60px] sm:max-w-[70px] cursor-pointer hover:opacity-80 transition-opacity">
+                            <div class="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden shadow-md border-2 border-soop mb-1 bg-white">
                                 <img src="${m.imgUrl}" onerror="this.src='${window.getAvatarUrl(m.name)}'" class="w-full h-full object-cover smooth-image">
-                                <div class="absolute top-0 left-0 bg-soop text-white text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-br-lg z-10">${i+1}</div>
+                                <div class="absolute top-0 left-0 bg-soop text-white text-[10px] sm:text-xs font-black px-1.5 py-0.5 rounded-br-lg z-10">${i+1}</div>
                             </div>
-                            <span class="text-[9px] sm:text-[10px] font-bold text-sky-950 text-center w-full truncate">${m.name}</span>
+                            <span class="text-[10px] sm:text-xs font-bold text-sky-950 text-center w-full truncate">${m.name}</span>
                         </div>
                     `;
                 } else {
                     slotsHtml += `
-                        <div class="flex flex-col items-center w-full">
-                            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl border-2 border-dashed border-sky-300 bg-sky-50 flex flex-col items-center justify-center text-sky-400 mb-1">
-                                <span class="text-sm sm:text-lg font-black text-sky-300">${i+1}</span>
+                        <div class="flex flex-col items-center w-full max-w-[60px] sm:max-w-[70px]">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl border-2 border-dashed border-sky-300 bg-sky-50 flex flex-col items-center justify-center text-sky-400 mb-1">
+                                <span class="text-base sm:text-xl font-black text-sky-300">${i+1}</span>
                             </div>
-                            <span class="text-[9px] text-transparent select-none">.</span>
+                            <span class="text-[10px] text-transparent select-none">.</span>
                         </div>
                     `;
                 }
@@ -1520,7 +1672,7 @@
 
             const c = window.state.evolutionOrder.filter(id => id !== undefined).length;
             const btn = document.getElementById('btn-start-game');
-            if (c === 12) {
+            if (c === reqCount) {
                 btn.innerHTML = `🎮 2048 게임 시작하기`;
                 btn.className = "w-full max-w-5xl py-4 rounded-xl font-bold text-xl transition-all bg-soop text-white shadow-[0_4px_0_#007bb5] active:translate-y-1 active:shadow-none animate-pulse";
                 btn.disabled = false;
@@ -1532,7 +1684,7 @@
                     window.state.tutorialStep = -0.3; // 완료 대기
                 }
             } else {
-                btn.innerHTML = `순서 배치 중... (${c}/12)`;
+                btn.innerHTML = `순서 배치 중... (${c}/${reqCount})`;
                 btn.className = "w-full max-w-5xl py-4 rounded-xl font-bold text-xl transition-all bg-sky-200 text-sky-500 cursor-not-allowed";
                 btn.disabled = true;
             }
@@ -1552,6 +1704,7 @@
         window.startTutorial = function() {
             window.initAudio();
             window.state.gameMode = 'tutorial';
+            window.state.gridSize = 4; // 튜토리얼 4x4 고정
             window.state.tutorialStep = -1; // -1: 멤버 선택, -0.5: 순서 배치, 0: 인게임 스와이프
             
             window.goToScreen('member_select');
@@ -1576,8 +1729,8 @@
         };
 
         window.startGame = function() {
-            // 이제 evolutionOrder에 12명이 모두 차 있어야 함
-            if(window.state.evolutionOrder.length !== 12 || window.state.evolutionOrder.includes(undefined)) return;
+            const reqCount = window.getRequiredMembersCount();
+            if(window.state.evolutionOrder.length !== reqCount || window.state.evolutionOrder.includes(undefined)) return;
             
             // 게임 시작 시 현재 선택된 라인업을 로컬스토리지에 저장
             localStorage.setItem('soop2048LastSelectedMembers', JSON.stringify(window.state.selectedMembers));
@@ -1591,9 +1744,11 @@
 
             const bgGrid = document.getElementById('game-bg-grid');
             let bgHtml = '';
-            for(let r=0; r<4; r++) {
-                for(let c=0; c<4; c++) {
-                    bgHtml += `<div class="absolute w-1/4 h-1/4 p-1" style="transform: translate(${c * 100}%, ${r * 100}%);"><div class="bg-slate-700/60 shadow-inner rounded-xl w-full h-full"></div></div>`;
+            const sizePct = 100 / window.state.gridSize;
+            
+            for(let r=0; r<window.state.gridSize; r++) {
+                for(let c=0; c<window.state.gridSize; c++) {
+                    bgHtml += `<div class="absolute p-1" style="width:${sizePct}%; height:${sizePct}%; transform: translate(${c * 100}%, ${r * 100}%);"><div class="bg-slate-700/60 shadow-inner rounded-xl w-full h-full"></div></div>`;
                 }
             }
             bgGrid.innerHTML = bgHtml;
@@ -1615,16 +1770,16 @@
             const guideTitle = document.getElementById('guide-title-text');
 
             if (window.state.guidePosition === 'right') {
-                layout.className = "flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-5xl mx-auto gap-6";
-                // 가이드 폭을 lg:w-[150px]에서 lg:w-[180px]로 확장하여 글림 잘림 보완
-                guideWrap.className = "w-full max-w-md lg:w-[180px] lg:max-w-none bg-white p-4 rounded-2xl shadow-md border-2 border-soop shrink-0 flex flex-col items-center h-auto lg:h-[500px] overflow-y-auto hide-scrollbar transition-colors";
+                layout.className = "flex flex-col lg:flex-row items-center lg:items-start justify-center w-full max-w-5xl mx-auto gap-4 sm:gap-6 px-2 sm:px-0";
+                // 가이드 폭을 확장하여 글림 잘림 보완
+                guideWrap.className = "w-full max-w-md lg:w-[180px] lg:max-w-none bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border-2 border-soop shrink-0 flex flex-col items-center h-auto lg:h-[500px] overflow-y-auto hide-scrollbar transition-colors";
                 guideTitle.innerHTML = "진화 순서<br/>가이드"; 
-                guide.className = "grid grid-cols-2 gap-x-2 gap-y-3 justify-items-center w-full";
+                guide.className = "grid grid-cols-3 min-[400px]:grid-cols-4 sm:grid-cols-5 lg:grid-cols-2 gap-x-2 gap-y-3 justify-items-center w-full"; // 반응형 그리드
             } else {
-                layout.className = "flex flex-col items-center w-full max-w-5xl mx-auto gap-6";
-                guideWrap.className = "w-full max-w-md sm:max-w-[450px] bg-white p-4 rounded-2xl shadow-md border-2 border-soop shrink-0 transition-colors";
+                layout.className = "flex flex-col items-center w-full max-w-5xl mx-auto gap-4 sm:gap-6 px-2 sm:px-0";
+                guideWrap.className = "w-full max-w-md sm:max-w-[450px] bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border-2 border-soop shrink-0 transition-colors";
                 guideTitle.innerHTML = "진화 순서 가이드";
-                guide.className = "grid grid-cols-6 grid-rows-2 gap-x-1 gap-y-3 justify-items-center w-full";
+                guide.className = "grid grid-cols-5 min-[400px]:grid-cols-6 sm:grid-cols-7 gap-x-1 sm:gap-x-2 gap-y-2 sm:gap-y-3 justify-items-center w-full"; // 반응형 그리드
             }
             window.renderEvolutionGuide();
         };
@@ -1634,12 +1789,12 @@
             guide.innerHTML = Object.entries(window.state.gameImages).map(([lvl, img]) => {
                 return `
                     <div class="flex flex-col items-center w-full">
-                        <div class="flex flex-col items-center w-[44px] sm:w-[48px]">
-                            <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-[10px] overflow-hidden mb-1 shadow-sm border border-sky-200 relative bg-sky-50 shrink-0">
+                        <div class="flex flex-col items-center w-[36px] sm:w-[48px]">
+                            <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-[10px] overflow-hidden mb-1 shadow-sm border border-sky-200 relative bg-sky-50 shrink-0">
                                 <img src="${img.imgUrl}" onerror="this.src='${window.getAvatarUrl(img.name)}'" class="w-full h-full object-cover smooth-image">
                                 <span class="absolute top-0 left-0 text-[8px] bg-sky-900/80 text-white w-3 h-3 flex items-center justify-center font-bold rounded-br-sm">${lvl}</span>
                             </div>
-                            <span class="text-[9px] font-bold text-sky-800 truncate w-full text-center px-0.5">${img.name}</span>
+                            <span class="text-[8px] sm:text-[9px] font-bold text-sky-800 truncate w-full text-center px-0.5">${img.name}</span>
                         </div>
                     </div>
                 `;
@@ -1699,7 +1854,7 @@
             document.getElementById('tutorial-tooltip').classList.add('hidden');
             
             const modeKey = window.getCurrentModeKey();
-            document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey];
+            document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey] || 0;
             
             const modeSubtitle = document.getElementById('game-mode-subtitle');
             if(window.state.gameMode === 'survival') {
@@ -1710,11 +1865,12 @@
                 
                 let maxTime = 30;
                 let timeDesc = "";
-                if (window.state.difficulty === 'beginner') { maxTime = 60; timeDesc = "(진화할때마다 +2초)"; }
-                else if (window.state.difficulty === 'intermediate') { maxTime = 45; timeDesc = "(4단계 이상 진화 시 +2초)"; }
-                else if (window.state.difficulty === 'advanced') { maxTime = 30; timeDesc = "(4단계 이상 진화 시 +2초)"; }
-                else if (window.state.difficulty === 'expert') { maxTime = 30; timeDesc = "(4~9단계 진화 시 +2초)"; }
-                else if (window.state.difficulty === 'master') { maxTime = 20; timeDesc = "(4~9단계 진화 시 +2초)"; }
+                const diffKey = window.state.difficulty.split('_')[0]; // 안전 처리
+                if (diffKey === 'beginner') { maxTime = 60; timeDesc = "(진화할때마다 +2초)"; }
+                else if (diffKey === 'intermediate') { maxTime = 45; timeDesc = "(4단계 이상 진화 시 +2초)"; }
+                else if (diffKey === 'advanced') { maxTime = 30; timeDesc = "(4단계 이상 진화 시 +2초)"; }
+                else if (diffKey === 'expert') { maxTime = 30; timeDesc = "(4~9단계 진화 시 +2초)"; }
+                else if (diffKey === 'master') { maxTime = 20; timeDesc = "(4~9단계 진화 시 +2초)"; }
 
                 window.state.timeLeft = maxTime;
                 window.state.maxTime = maxTime;
@@ -1777,7 +1933,7 @@
         window.updateScore = function(add) {
             window.state.score += add;
             const modeKey = window.getCurrentModeKey();
-            if(window.state.score > window.state.bestScores[modeKey]) {
+            if(window.state.score > (window.state.bestScores[modeKey] || 0)) {
                 window.state.bestScores[modeKey] = window.state.score;
                 localStorage.setItem('soop2048BestScores', JSON.stringify(window.state.bestScores));
                 document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey];
@@ -1789,12 +1945,15 @@
             document.getElementById('game-score').innerText = window.state.score;
             
             const modeKey = window.getCurrentModeKey();
-            document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey];
+            document.getElementById('game-best-score').innerText = window.state.bestScores[modeKey] || 0;
 
             const container = document.getElementById('game-tiles-container');
+            const sizePct = 100 / window.state.gridSize;
+            
             container.innerHTML = Object.values(window.state.tiles).map(t => {
-                const lvlData = window.state.gameImages[t.value] || window.state.gameImages[12];
-                let classes = "tile-wrapper w-1/4 h-1/4 p-1";
+                const reqCount = window.getRequiredMembersCount();
+                const lvlData = window.state.gameImages[t.value] || window.state.gameImages[reqCount];
+                let classes = "tile-wrapper p-1";
                 if(t.isDeleted) classes += " z-10"; else classes += " z-20";
                 
                 let innerClasses = "w-full h-full rounded-xl flex flex-col items-center justify-center shadow-md border border-white/60 overflow-hidden relative bg-white";
@@ -1802,11 +1961,11 @@
                 if(t.isMerged) innerClasses += " animate-pop";
 
                 return `
-                    <div class="${classes}" style="transform: translate(${t.c * 100}%, ${t.r * 100}%);">
+                    <div class="${classes}" style="width:${sizePct}%; height:${sizePct}%; transform: translate(${t.c * 100}%, ${t.r * 100}%);">
                         <div class="${innerClasses}">
                             <img src="${lvlData.imgUrl}" onerror="this.src='${window.getAvatarUrl(lvlData.name)}'" class="absolute inset-0 w-full h-full object-cover smooth-image z-0">
-                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900/90 to-transparent pt-4 pb-1 z-10 flex justify-center">
-                                <span class="text-[10px] sm:text-xs font-extrabold tracking-tight px-1 text-center leading-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-white drop-shadow-md">
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900/90 to-transparent pt-3 sm:pt-4 pb-1 z-10 flex justify-center">
+                                <span class="text-[9px] sm:text-[10px] md:text-xs font-extrabold tracking-tight px-1 text-center leading-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-white drop-shadow-md">
                                     ${lvlData.name}
                                 </span>
                             </div>
@@ -1821,8 +1980,9 @@
             overL.style.display = window.state.gameOver && window.state.gameMode !== 'tutorial' ? 'flex' : 'none';
             
             if(window.state.gameWon && !window.state.continueAfterWin && window.state.gameMode !== 'tutorial') {
-                document.getElementById('gamewon-img').src = window.state.gameImages[12].imgUrl;
-                document.getElementById('gamewon-name').innerText = window.state.gameImages[12].name + ' 달성!';
+                const reqCount = window.getRequiredMembersCount();
+                document.getElementById('gamewon-img').src = window.state.gameImages[reqCount].imgUrl;
+                document.getElementById('gamewon-name').innerText = window.state.gameImages[reqCount].name + ' 달성!';
                 wonL.style.display = 'flex';
             } else {
                 wonL.style.display = 'none';
@@ -1867,6 +2027,7 @@
             let isMergedThisTurn = false;
             let highMergeThisTurn = false;
             let tutMerged = false;
+            const reqCount = window.getRequiredMembersCount();
             
             const newBoard = JSON.parse(JSON.stringify(window.state.board));
             const newTiles = JSON.parse(JSON.stringify(window.state.tiles));
@@ -1897,7 +2058,7 @@
                             const newValue = tile.value + 1;
                             
                             scoreIncrease += Math.pow(2, newValue) * 10;
-                            if (newValue === 12) reachedMaxLevel = true;
+                            if (newValue === reqCount) reachedMaxLevel = true;
 
                             mergedThisTurnArray[next.r][next.c] = true;
                             newTiles[tileId].r = next.r;
@@ -1915,10 +2076,11 @@
                             
                             if(window.state.gameMode === 'survival') {
                                 let bonus = 0;
-                                if (window.state.difficulty === 'beginner') bonus = 2;
-                                else if (window.state.difficulty === 'intermediate' || window.state.difficulty === 'advanced') {
+                                const diffKey = window.state.difficulty.split('_')[0];
+                                if (diffKey === 'beginner') bonus = 2;
+                                else if (diffKey === 'intermediate' || diffKey === 'advanced') {
                                     if (newValue >= 4) bonus = 2;
-                                } else if (window.state.difficulty === 'expert' || window.state.difficulty === 'master') {
+                                } else if (diffKey === 'expert' || diffKey === 'master') {
                                     if (newValue >= 4 && newValue <= 9) bonus = 2;
                                 }
 
