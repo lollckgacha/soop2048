@@ -5113,6 +5113,14 @@ const SOOP_DATA = {
         "imgs": [
             "images/streamers/punyang.png"
         ]
+    },
+    {
+        "id": "s638",
+        "name": "나른자",
+        "channelUrl": "https://www.sooplive.com/station/wldnjsdpqh",
+        "imgs": [
+            "images/streamers/narunza.png"
+        ]
     }
 ],
     achievements: [
