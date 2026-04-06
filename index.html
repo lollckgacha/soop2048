@@ -464,7 +464,7 @@
             <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-sm border border-sky-100 mb-4 max-w-3xl mx-auto w-full transition-colors flex flex-col gap-2.5 sm:gap-3">
                 <div class="flex flex-col sm:flex-row gap-2">
                     <select id="crew-filter-select" onchange="setCrewFilter(this.value)" class="flex-1 p-2 sm:p-2.5 border-2 border-sky-200 rounded-xl bg-sky-50 outline-none focus:border-soop text-xs sm:text-sm font-bold text-sky-900 transition-colors">
-                        <option value="all">그룹/크루 선택</option>
+                        <option value="all">전체</option>
                         <!-- 스크립트에서 추가됨 -->
                     </select>
                     <button id="btn-select-all-crew" onclick="selectAllInCrew()" class="hidden bg-sky-500 hover:bg-sky-600 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-sm shrink-0 transition-colors">
@@ -1318,7 +1318,7 @@
         // === 4. 멤버 선택 (1단계: N명 고르기) 로직 ===
         window.renderCrewFilterDropdown = function() {
             const select = document.getElementById('crew-filter-select');
-            let html = `<option value="all">그룹/크루 선택</option>`;
+            let html = `<option value="all">전체</option>`;
             CREWS_DB.forEach(c => {
                 html += `<option value="${c.id}">${c.name} (${c.members.length}명)</option>`;
             });
