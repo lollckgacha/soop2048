@@ -911,7 +911,7 @@ const SOOP_DATA = {
         "name": "마로니",
         "channelUrl": "https://www.sooplive.co.kr/station/marronie",
         "imgs": [
-            "images/streamers/maroni.webp"
+            "images/streamers/maroni.png"
         ]
     },
     {
@@ -5119,7 +5119,7 @@ const SOOP_DATA = {
         "name": "김나오",
         "channelUrl": "https://www.sooplive.com",
         "imgs": [
-            "images/streamers/.png"
+            "images/streamers/kimnao.png"
         ]
     },
     {
@@ -5127,9 +5127,74 @@ const SOOP_DATA = {
         "name": "공태연",
         "channelUrl": "https://www.sooplive.com",
         "imgs": [
-            "images/streamers/.png"
+            "images/streamers/gongtaeyeon.png"
+        ]
+    },
+    {
+        "id": "s640",
+        "name": "오늘님",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/oneulnim.png"
+        ]
+    },
+    {
+        "id": "s641",
+        "name": "홍주아",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/hongjua.png"
+        ]
+    },
+    {
+        "id": "s642",
+        "name": "김솜냐",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/gimsomnya.png"
+        ]
+    },
+    {
+        "id": "s643",
+        "name": "밤문",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/bammun.png"
+        ]
+    },
+    {
+        "id": "s644",
+        "name": "룬나",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/runna.png"
+        ]
+    },
+    {
+        "id": "s645",
+        "name": "백소라",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/baegsora.png"
+        ]
+    },
+    {
+        "id": "s646",
+        "name": "지오",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/jio.png"
+        ]
+    },
+    {
+        "id": "s647",
+        "name": "쪼아나",
+        "channelUrl": "https://www.sooplive.com",
+        "imgs": [
+            "images/streamers/jjoana.png"
         ]
     }
+       
 ],
     achievements: [
     {
