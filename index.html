@@ -160,7 +160,7 @@
 
     <!-- 설정 모달창 -->
     <div id="settings-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] flex-col items-center justify-center p-4 animate-fade-in">
-        <div class="bg-white p-6 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-5 relative transition-colors">
+        <div class="bg-white p-6 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-5 relative transition-colors max-h-[90vh] overflow-y-auto hide-scrollbar">
             <h2 class="text-2xl font-black text-sky-950 text-center">⚙️ 설정</h2>
             <button onclick="closeSettings()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
 
@@ -182,6 +182,16 @@
                 </label>
             </div>
 
+            <!-- 최고 점수 초기화 -->
+            <div class="flex flex-col gap-2 border-t border-sky-100 pt-4">
+                <label class="font-bold text-sky-800 flex items-center justify-between">
+                    <span class="flex items-center gap-2"><span>🗑️</span> 데이터 초기화</span>
+                </label>
+                <button id="btn-reset-scores" onclick="confirmResetScores()" class="w-full py-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 font-bold rounded-xl transition-colors shadow-sm text-sm flex items-center justify-center gap-2 active:scale-95">
+                    모든 최고 점수 초기화
+                </button>
+            </div>
+
             <!-- 닉네임 설정 -->
             <div class="flex flex-col gap-2 border-t border-sky-100 pt-4">
                 <label class="font-bold text-sky-800 flex items-center gap-2"><span>👤</span> 닉네임 변경 <span class="text-[10px] text-sky-500 font-normal">(로그인 시)</span></label>
@@ -192,6 +202,18 @@
                     </div>
                     <button id="btn-apply-nickname" onclick="applyNicknameFromSettings()" disabled class="w-full bg-soop hover:bg-sky-500 text-white font-bold px-4 py-2 rounded-xl transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">변경하기</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 점수 초기화 확인 모달 -->
+    <div id="reset-confirm-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[99999] flex-col items-center justify-center p-4 animate-fade-in">
+        <div class="bg-white p-6 rounded-3xl border-2 border-rose-500 max-w-xs w-full text-center shadow-2xl transition-colors">
+            <h3 class="text-xl font-bold text-rose-500 mb-2">점수 초기화</h3>
+            <p class="text-slate-600 text-sm mb-6 break-keep">모든 모드의 최고 점수 기록이 0으로 초기화됩니다.<br>정말 초기화하시겠습니까?</p>
+            <div class="flex gap-3">
+                <button onclick="closeResetConfirm()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-xl transition-colors">취소</button>
+                <button onclick="executeResetScores()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl transition-colors shadow-sm">초기화</button>
             </div>
         </div>
     </div>
@@ -784,6 +806,62 @@
             localStorage.setItem('soop2048Volume', window.globalVolume);
             window.initAudio();
             window.playSound('move');
+        };
+
+        window.confirmResetScores = function() {
+            window.playSound('click');
+            document.getElementById('reset-confirm-modal').classList.remove('hidden');
+            document.getElementById('reset-confirm-modal').classList.add('flex');
+        };
+
+        window.closeResetConfirm = function() {
+            window.playSound('click');
+            document.getElementById('reset-confirm-modal').classList.add('hidden');
+            document.getElementById('reset-confirm-modal').classList.remove('flex');
+        };
+
+        window.executeResetScores = async function() {
+            window.playSound('click');
+            
+            // 1. 상태 초기화
+            window.state.bestScores = { 
+                normal_4x4: 0, normal_5x5: 0, normal_6x6: 0, 
+                beginner_4x4: 0, beginner_5x5: 0, beginner_6x6: 0, 
+                intermediate_4x4: 0, intermediate_5x5: 0, intermediate_6x6: 0,
+                advanced_4x4: 0, advanced_5x5: 0, advanced_6x6: 0,
+                expert_4x4: 0, expert_5x5: 0, expert_6x6: 0,
+                master_4x4: 0, master_5x5: 0, master_6x6: 0 
+            };
+            
+            // 2. 로컬 스토리지 업데이트
+            localStorage.setItem('soop2048BestScores', JSON.stringify(window.state.bestScores));
+            localStorage.removeItem('soopCustom2048Best'); // 구버전 데이터 삭제
+
+            // 3. 파이어베이스 업데이트 (로그인 시)
+            if (currentUser && !currentUser.isAnonymous) {
+                try {
+                    await set(ref(db, 'users/' + currentUser.uid + '/soop2048/bestScores'), window.state.bestScores);
+                    await set(ref(db, 'users/' + currentUser.uid + '/soop2048/bestScore'), 0); // 구버전 필드 초기화
+                } catch(e) { console.error("Firebase 초기화 실패", e); }
+            }
+
+            // 4. UI 갱신
+            const gameBestScoreEl = document.getElementById('game-best-score');
+            if(gameBestScoreEl) gameBestScoreEl.innerText = '0';
+            
+            window.closeResetConfirm();
+            
+            // 초기화 완료 피드백
+            const btn = document.getElementById('btn-reset-scores');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "✅ 초기화 완료!";
+            btn.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
+            btn.classList.add('bg-green-100', 'text-green-800', 'border-green-200');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.add('bg-rose-50', 'text-rose-600', 'border-rose-200');
+                btn.classList.remove('bg-green-100', 'text-green-800', 'border-green-200');
+            }, 2000);
         };
 
         window.openBoardScaleSettings = function(fromInGame = false) {
