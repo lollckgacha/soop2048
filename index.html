@@ -1993,10 +1993,17 @@
             const container = document.getElementById('game-tiles-container');
             const sizePct = 100 / window.state.gridSize;
             
-            container.innerHTML = Object.values(window.state.tiles).map(t => {
+            // 기존의 innerHTML 전체 덮어쓰기 방식을 DOM 요소 재사용 방식으로 변경 (슬라이드 애니메이션 효과를 위해)
+            const currentElements = Array.from(container.children);
+            const activeIds = new Set();
+
+            Object.values(window.state.tiles).forEach(t => {
+                activeIds.add(t.id.toString());
+                let tileEl = document.getElementById(`tile-${t.id}`);
+                
                 const reqCount = window.getRequiredMembersCount();
                 const lvlData = window.state.gameImages[t.value] || window.state.gameImages[reqCount];
-                let classes = "tile-wrapper p-1";
+                let classes = "tile-wrapper p-1 absolute top-0 left-0";
                 if(t.isDeleted) classes += " z-10"; else classes += " z-20";
                 
                 const borderColor = window.getLevelBorderColor(t.value);
@@ -2005,20 +2012,39 @@
                 if(t.isNew) innerClasses += " animate-pop-in";
                 if(t.isMerged) innerClasses += " animate-pop";
 
-                return `
-                    <div class="${classes}" style="width:${sizePct}%; height:${sizePct}%; transform: translate(${t.c * 100}%, ${t.r * 100}%);">
-                        <div class="${innerClasses}" style="border-color: ${borderColor};">
-                            <img src="${lvlData.imgUrl}" onerror="this.src='${window.getAvatarUrl(lvlData.name)}'" class="absolute inset-0 w-full h-full object-cover smooth-image z-0">
-                            <div class="absolute top-0 left-0 text-white text-[8px] sm:text-[10px] font-bold px-1 py-0.5 rounded-br-lg z-10" style="background-color: ${borderColor};">${t.value}</div>
-                            <div class="absolute bottom-0 left-0 w-full pb-1 z-10 flex justify-center pointer-events-none">
-                                <span class="text-[9px] sm:text-[10px] md:text-xs font-extrabold tracking-tight px-1 text-center leading-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-white text-stroke">
-                                    ${lvlData.name}
-                                </span>
-                            </div>
+                if (!tileEl) {
+                    // 새 타일 생성
+                    tileEl = document.createElement('div');
+                    tileEl.id = `tile-${t.id}`;
+                    container.appendChild(tileEl);
+                }
+
+                // 타일 위치 및 크기 업데이트 (여기서 transform 효과가 발생하여 슬라이드 됨)
+                tileEl.className = classes;
+                tileEl.style.width = `${sizePct}%`;
+                tileEl.style.height = `${sizePct}%`;
+                tileEl.style.transform = `translate(${t.c * 100}%, ${t.r * 100}%)`;
+
+                tileEl.innerHTML = `
+                    <div class="${innerClasses}" style="border-color: ${borderColor};">
+                        <img src="${lvlData.imgUrl}" onerror="this.src='${window.getAvatarUrl(lvlData.name)}'" class="absolute inset-0 w-full h-full object-cover smooth-image z-0">
+                        <div class="absolute top-0 left-0 text-white text-[8px] sm:text-[10px] font-bold px-1 py-0.5 rounded-br-lg z-10" style="background-color: ${borderColor};">${t.value}</div>
+                        <div class="absolute bottom-0 left-0 w-full pb-1 z-10 flex justify-center pointer-events-none">
+                            <span class="text-[9px] sm:text-[10px] md:text-xs font-extrabold tracking-tight px-1 text-center leading-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-white text-stroke">
+                                ${lvlData.name}
+                            </span>
                         </div>
                     </div>
                 `;
-            }).join('');
+            });
+
+            // 합쳐져서 사라진 타일들 DOM에서 정리
+            currentElements.forEach(el => {
+                const id = el.id.replace('tile-', '');
+                if (!activeIds.has(id)) {
+                    container.removeChild(el);
+                }
+            });
 
             const overL = document.getElementById('overlay-gameover');
             const wonL = document.getElementById('overlay-gamewon');
